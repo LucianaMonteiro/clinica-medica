@@ -80,7 +80,8 @@
     align-content: center;
   }
   
-  .boxes {
+  .cards,
+  .content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -89,7 +90,7 @@
     gap: 20px;
   }
 
-  .box {
+  .card {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -97,13 +98,17 @@
     height: 12vw;
     width: 12vw;
     padding: 10px 15px 0;
-    gap: 10px;
+    background-color: var(--primary);
+  }
 
+  .card a {
     text-align: center;
     font-size: 1.1em;
     font-weight: 600;
+    text-decoration: none;
     color: var(--font-primary);
-    background-color: var(--primary);
+    gap: 10px;
+
   }
 
   div.buttons {
@@ -117,6 +122,27 @@
     margin-bottom: 15px;
     font-size: 7rem;
     color: var(--secondary);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table tbody tr td:first-child {
+    white-space: nowrap;
+  }
+  
+  th,
+  td {
+    padding: 0.2em 0.2em 0.2em 0;
+    text-align: left;
+    border-bottom: 1px solid var(--secondary);
+    border-radius: 0;
+  }
+
+  th {
+    border-bottom: 2px solid var(--secondary);
   }
 
   @media (min-width: 600px) {
@@ -144,13 +170,30 @@
   } 
 
   @media (max-width: 992px) {
-    .boxes {
+    .cards,
+    .content {
       width: 100%;
     }
-
-    .box {
-      width: 100%;
-      font-size: .95em;
+    .content {
       justify-content: start;
+    }
+
+    .card {
+      width: 100%;
+      justify-content: start;
+    }
+
+    .card a {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      text-align: start;
+      justify-content: start;
+      font-size: .95em;
+    }
+
+    table {
+      width: 90%;
+      font-size: 0.9em;
+      overflow-x: auto;
     }
   } 
