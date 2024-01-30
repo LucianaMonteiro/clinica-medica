@@ -17,6 +17,10 @@ async def root():
 async def root():
     return "/app/login.html"
 
+@app.get("/api/pacientes")
+async def pacientes():
+    return get_pacientes()
+
 @app.get("/api/medicos", response_class=HTMLResponse)
 async def medicos(request: Request):
     medicos = get_medicos()
@@ -66,9 +70,28 @@ def get_medicos():
 
     return dados
 
-    """
-        Nome	CRM	Especialidade	Turno	Situação	 
-        					 
-        Naelle Monteiro	345678	Pediatria	Diurno	Ativo	 
-        Lidia Monteiro	456789	Nutrição	Vespertino	Inativo
-    """
+def get_pacientes():
+    dados = [
+        {
+            "nome": "Izaias Lima",
+            "email": "izaias@lima.com",
+            "status": "Internado",
+        },
+        {
+            "nome": "Luciete Lima",
+            "email": "luciete@lima.com",
+            "status": "Em atendimento",
+        },
+        {
+            "nome": "Natan Monteiro",
+            "email": "natan@monteiro.com",
+            "status": "Atendido",
+        },
+        {
+            "nome": "Luciana Monteiro",
+            "email": "luciana@monteiro.com",
+            "status": "Liberada",
+        },
+    ]
+
+    return dados

@@ -1,18 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Médica - Pacientes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="content">
             <h1>Cadastro de Pacientes</h1>
 
-            <table>
+            <div hx-ext="client-side-templates">
+                <button hx-get="/api/pacientes" hx-swap="innerHTML" hx-target="#content"
+                    mustache-array-template="template">
+                    Clicar
+                </button>
+                <h3 id="content">Os dados aqui</h3>
+                <template id="template">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!-- {{#data}} -->
+                            <tr>
+                                <td>{{nome}}</td>
+                                <td>{{email}}</td>
+                                <td>{{status}}</td>
+                            </tr>
+                            <!-- {{/data}} -->
+                        </tbody>
+                    </table>
+                </template>
+            </div>
+
+            <!-- <table>
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -64,9 +100,10 @@
                     </tr>
                     
                 </tbody>
-            </table>
+            </table> -->
         </div>
     </div>
-    
+
 </body>
+
 </html>
