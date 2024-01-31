@@ -75,22 +75,26 @@ def get_pacientes():
         {
             "nome": "Izaias Lima",
             "email": "izaias@lima.com",
-            "status": "Internado",
+            "telefone": "61 98181-3390",
+            "status": "internado",
         },
         {
             "nome": "Luciete Lima",
             "email": "luciete@lima.com",
-            "status": "Em atendimento",
+            "telefone": "61 98136-0050",
+            "status": "em atendimento",
         },
         {
             "nome": "Natan Monteiro",
             "email": "natan@monteiro.com",
-            "status": "Atendido",
+            "telefone": "61 98313-4298",
+            "status": "atendido",
         },
         {
             "nome": "Luciana Monteiro",
             "email": "luciana@monteiro.com",
-            "status": "Liberada",
+            "telefone": "61 98313-4289",
+            "status": "liberada",
         },
     ]
 
