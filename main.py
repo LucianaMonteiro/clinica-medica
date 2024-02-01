@@ -29,6 +29,13 @@ async def medicos():
     dados = get_medicos()
     return dados
 
+@app.delete("/api/medicos/{id}", response_class=HTMLResponse)
+async def medicos(id: str):
+    return ""
+
+@app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
+async def pacientes(id: str):
+    return ""
 
 # @app.get("/api/medicos", response_class=HTMLResponse)
 # async def medicos():

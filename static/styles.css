@@ -188,6 +188,11 @@
     text-transform: uppercase;
   }
 
+  tr.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+  }
+
   @media (min-width: 600px) {
     .login {
       width: 60%;
