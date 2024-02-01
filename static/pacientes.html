@@ -31,6 +31,7 @@
                                 <th>Email</th>
                                 <th>Telefone</th>
                                 <th>Situação</th>
+                                <th colspan="2">&nbsp;</th>
                             </tr>
                         </thead>
 
@@ -41,69 +42,22 @@
                                 <td class="lcase">{{email}}</td>
                                 <td>{{telefone}}</td>
                                 <td class="flcase">{{status}}</td>
+                                <td class="icon">
+                                    <i class="fa fa-pencil"></i>
+                                </td>
+                                <td class="icon">
+                                    <a hx-delete="/api/pacientes/1">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <!-- {{/data}} -->
                         </tbody>
                     </table>
                 </template>
             </div>
-
-            <!-- <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Situação</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>Izaias Lima</td>
-                        <td>izaias@lima.com</td>
-                        <td>Internado</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>                            
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Luciete Lima</td>
-                        <td>luciete@lima.com</td>
-                        <td>Em atendimento</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>                            
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Natan Monteiro</td>
-                        <td>natan@monteiro.com</td>
-                        <td>Atendido</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>                            
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Luciana Monteiro</td>
-                        <td>luciana@monteiro.com</td>
-                        <td>Liberada</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>                            
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table> -->
         </div>
     </div>
-
 </body>
 
 </html>

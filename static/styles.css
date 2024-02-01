@@ -147,6 +147,10 @@
     color: var(--secondary);
   }
 
+  td.icon {
+    cursor: pointer;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
