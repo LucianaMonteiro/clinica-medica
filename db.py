@@ -1,6 +1,7 @@
-import sqlite3 as db
+import sqlite3 as sql
 
-con = db.connect("clinica.db")
+con = sql.connect("clinica.db")
+con.row_factory = sql.Row
 cur = con.cursor()
 
 def get_medicos():
@@ -12,5 +13,6 @@ def get_pacientes():
 
 def get_dados(tbl):
     sql = f"SELECT * FROM {tbl}"
-    dados = cur.execute(sql).fetchall()
+    rows = cur.execute(sql).fetchall()
+    dados = [dict(row) for row in rows]
     return dados
