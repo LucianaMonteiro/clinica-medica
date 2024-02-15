@@ -3,7 +3,7 @@
 import sqlite3
 
 
-print(f"Script {__name__} executado.") 
+print(f"Script {__name__} executado.")
 
 
 def tbl_create():
@@ -12,10 +12,17 @@ def tbl_create():
     con = sqlite3.connect("clinica.db")
     cur = con.cursor()
 
+    try:
+        cur.execute("DROP TABLE medicos")
+        cur.execute("DROP TABLE pacientes")
+    except:
+        pass
+
     cur.execute(
         """
             CREATE TABLE IF NOT EXISTS medicos
-                (nome text,
+                (id integer PRIMARY KEY AUTOINCREMENT,
+                nome text,
                 crm text,
                 email text,
                 especialidade text,
@@ -28,7 +35,8 @@ def tbl_create():
     cur.execute(
         """
             CREATE TABLE IF NOT EXISTS pacientes
-                (nome text,
+                (id integer PRIMARY KEY AUTOINCREMENT,
+                nome text,
                 email text,
                 telefone text,
                 status text
@@ -41,12 +49,12 @@ def tbl_create():
 
     print("Tabelas criadas.")
 
+
 def tables_init():
     """Incluir dados iniciais de teste nas tabelas."""
 
     con = sqlite3.connect("clinica.db")
     cur = con.cursor()
-
 
     # cur.execute(
     #     """
@@ -63,54 +71,47 @@ def tables_init():
 
     medicos = [
         (
+            None,
             "Kaio Oliveira",
-                "123456",
-                "kaio@gmail.com",
-                "cardiologia",
-                "noturno",
-                "ativo"
+            "123456",
+            "kaio@gmail.com",
+            "cardiologia",
+            "noturno",
+            "ativo",
         ),
         (
+            None,
             "Dileyciane Monteiro",
             "234567",
             "ciane@gmail.com",
             "dermatologia",
             "diurno",
-            "em análise"
+            "em análise",
         ),
         (
-            "Naelle Monteiro",
+            None,
+            "naelle monteiro",
             "345678",
             "NAELLE@gmail.com",
             "pediatria",
             "DIURNO",
-            "ATIVO"
+            "ATIVO",
         ),
     ]
 
     pacientes = [
-        (
-            "Izaias Lima",
-            "izaias@lima.com",
-            "61 98181-3390",
-            "internado"
-        ),
-        (
-            "Luciete Lima",
-            "luciete@lima.com",
-            "61 98136-0050",
-            "em atendimento"
-        ),
+        (None, "izaias lima", "izaias@lima.com", "61 98181-3390", "internado"),
+        (None, "Luciete Lima", "luciete@lima.com", "61 98136-0050", "em atendimento"),
     ]
 
     cur.execute("DELETE FROM medicos")
     cur.execute("DELETE FROM pacientes")
 
-    cur.executemany("INSERT INTO medicos values (?,?,?,?,?,?)", medicos)
-    cur.executemany("INSERT INTO pacientes values (?,?,?,?)", pacientes)
+    cur.executemany("INSERT INTO medicos values (?,?,?,?,?,?,?)", medicos)
+    cur.executemany("INSERT INTO pacientes values (?,?,?,?,?)", pacientes)
 
     con.commit()
-    con.close() 
+    con.close()
 
     print("Dados iniciais incluídos nas tabelas.")
 

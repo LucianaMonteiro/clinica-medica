@@ -16,3 +16,15 @@ def get_dados(tbl):
     rows = cur.execute(sql).fetchall()
     dados = [dict(row) for row in rows]
     return dados
+
+def del_medico(id):
+    delete("medicos", id)
+
+def del_paciente(id):
+    delete("pacientes", id)
+
+def delete(tbl, id):
+    sql = f"DELETE FROM {tbl} WHERE id={id}"
+    cur.execute(sql)
+    con.commit()
+    return 
