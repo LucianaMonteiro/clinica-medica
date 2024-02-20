@@ -34,12 +34,14 @@
                         <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
                             <!-- {{#data}} -->
                             <tr>
-                                <td class="ucase">{{nome}}</td>
+                                <td title="{{id}}" class="ucase">{{nome}}</td>
                                 <td class="lcase">{{email}}</td>
                                 <td>{{telefone}}</td>
                                 <td class="flcase">{{status}}</td>
                                 <td class="icon">
-                                    <i class="fa fa-pencil"></i>
+                                    <a hx-target="closest tr" hx-get="/api/pacientes/{{id}}/edit" hx-trigger="click" hx-swap="outerHTML swap:0.5s">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
                                 </td>
                                 <td class="icon">
                                     <a hx-confirm="{{nome}}?" hx-delete="/api/pacientes/{{id}}">
