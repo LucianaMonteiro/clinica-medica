@@ -44,12 +44,12 @@
                                 <td data-th="Situação" class="fl-case">{{status}}</td>
                                 <td class="icon">
                                     <div>
-                                         <a hx-target="closest tr" hx-get="/api/pacientes/{{id}}/edit" hx-trigger="click"
-                                            hx-swap="outerHTML swap:0.5s">
+                                         <a hx-target="closest tr" hx-get="/api/pacientes/{{id}}/edit" hx-trigger="edit"
+                                            hx-swap="outerHTML" onclick="onClick(this)">
                                             <!-- <i class="fa fa-pencil"></i> -->
                                             <i class="material-symbols-outlined"> edit </i>
                                         </a>
-                                        <a hx-confirm="{{nome}}?" hx-delete="/api/pacientes/{{id}}">
+                                        <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?" hx-delete="/api/pacientes/{{id}}">
                                             <i class="material-symbols-outlined"> delete </i>
                                             <!-- <i class="fa fa-trash-o"></i> -->
                                         </a>
@@ -76,7 +76,7 @@
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
     <script src="https://unpkg.com/mustache@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./js/modal.js"></script>
+    <script src="./js/functions.js"></script>
 
 </body>
 

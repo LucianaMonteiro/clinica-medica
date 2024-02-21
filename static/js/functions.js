@@ -4,7 +4,7 @@ document.addEventListener(
         if (e.detail.question !== null) {
             e.preventDefault();
             Swal.fire({
-                icon:'question',
+                icon: 'question',
                 buttonsStyling: false,
                 showCancelButton: true,
                 reverseButtons: true,
@@ -18,3 +18,13 @@ document.addEventListener(
         }
     }
 );
+
+function onClick(obj) {
+    let editing = document.querySelector('.editing');
+
+    if (editing) {
+        htmx.trigger(editing, 'cancel')
+    } else {
+        htmx.trigger(obj, 'edit')
+    }
+}
