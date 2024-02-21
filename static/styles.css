@@ -79,27 +79,64 @@ button.swal2-cancel {
     font-weight: 500;
   }
 
+  .small-icon {
+    font-size: 1.5em;
+  }
+
+  .big-icon {
+    font-size: 6cqw;
+  }
+
   .w-100 {
     width: 100%;
   }
 
-  .ucase {
+  .u-case {
     text-transform: uppercase;
   }
 
-  .lcase {
+  .l-case {
     text-transform: lowercase;
   }
 
+  *.fl-case:first-letter {
+    text-transform: uppercase;
+  }
+
   .cards,
-  .content, 
-  .dados {
+  .content,
+  .dados, 
+  .titles {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-content: center;
+    /* align-content: center; */
     width: 95%;
     gap: 20px;
+  }
+
+  .dados {
+    width: 100%;
+  }
+
+  .titles {
+    flex-direction: column;
+    padding: 40px 0;
+  }
+
+  .titles h1,
+  .titles h2 {
+    text-align: center;
+    line-height: 1em;
+    margin: 0.2em;
+  }
+
+  .titles h1 {
+    font-size: 2.5cqw;
+  }
+
+  .titles h2 {
+    font-size: 2cqw;
   }
 
   .cards {
@@ -111,20 +148,23 @@ button.swal2-cancel {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    height: 12vw;
-    width: 12vw;
-    padding: 25px 15px 0;
+    height: 13vw;
+    width: 13vw;
+    padding: 15px 15px 0;
     background-color: var(--primary);
   }
 
   .card a {
     text-align: center;
-    font-size: 1.1em;
+    font-size: 1.4cqw;
     font-weight: 600;
     text-decoration: none;
     color: var(--font-primary);
-    gap: 10px;
+    gap: 15px;
+  }
 
+  .card a p {
+    line-height: 1.2em;
   }
  
   input {
@@ -187,6 +227,13 @@ button.swal2-cancel {
     cursor: pointer;
   }
 
+  td.icon div {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    gap: 7px;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -220,10 +267,6 @@ button.swal2-cancel {
     text-transform: uppercase;
   } */
 
-  td.flcase::first-letter {
-    text-transform: uppercase;
-  }
-
   tr.htmx-swapping td {
     opacity: 0;
     transition: opacity 0.2s ease-out;
@@ -253,19 +296,37 @@ button.swal2-cancel {
     }
   } 
 
-  @media (max-width: 992px) {
-    .cards {
-      width: 100%;
-    }
+    @media (max-width:992px) {
+      *{
+        font-size: 18px;
+      }
 
-    .content,
-    .dados {
-      justify-content: start;
-    }
+      .container {
+        min-height: 70vh;
+        width: 95vw;
+        padding: 5px;
+        overflow-x: auto;
+      }
+
+      .titles h1 {
+        font-size: 5cqw;
+      }
+    
+      .titles h2 {
+        font-size: 4cqw;
+      }
+      
+      .content,
+      .dados {
+        justify-content: start;
+      }
+      
+      .cards {
+        width: 100%;
+      }
 
     .card {
       width: 100%;
-      padding: 10px 30px 0;
       justify-content: start;
     }
 
@@ -274,11 +335,53 @@ button.swal2-cancel {
       flex-wrap: nowrap;
       text-align: start;
       justify-content: start;
-      font-size: .95em;
+      gap: 15px;
+    }
+    
+    .card a p {
+      padding-top: 5px;
+      font-size: 4cqw;
+    }
+    
+    .big-icon {
+      padding-top: 10px;
+      font-size: 10cqw;
     }
 
     table {
-      font-size: 0.9em;
+      font-size: 1.3em;
       overflow-x: auto;
+    }
+
+    th {
+      display: none;
+    }
+
+    td {
+      display: block;
+    }
+
+    td:before {
+      content: attr(data-th) ": ";
+      font-weight: 600;
+    }
+
+    td:first-child:before,
+    td:last-child:before,
+    td:has(input):before {
+      content: "";
+    }
+
+    td:first-child {
+      font-weight: 600;
+    }
+
+    td:last-child {
+      margin-bottom: 30px;
+    }
+
+    td.icon div {
+      justify-content: flex-start;
+      padding-left: 0;
     }
   } 
