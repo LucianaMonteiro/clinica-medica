@@ -11,7 +11,7 @@ def paciente_html(dados):
                         title="Cancelar a alteração"
                         hx-swap="outerHTML" 
                         hx-target="closest table">
-                        <i class="material-symbols-outlined x2">undo</i>
+                        <i class="material-symbols-outlined small-icon">undo</i>
                     </a>
                 
                     <a hx-trigger="click" 
@@ -20,7 +20,7 @@ def paciente_html(dados):
                         title="Salvar"
                         hx-swap="outerHTML" 
                         hx-target="closest table">
-                        <i class="material-symbols-outlined x2">save</i>
+                        <i class="material-symbols-outlined small-icon">save</i>
                     </a>
                 </div>
             </td>

@@ -82,7 +82,7 @@
   }
 
   .small-icon {
-    font-size: 1.5em;
+    font-size: 1.7em;
   }
 
   .big-icon {
@@ -168,6 +168,11 @@
     line-height: 1.2em;
   }
 
+  .spinner {
+    display: flex;
+    justify-content: center;
+  }
+
   input {
     height: 2.5em;
     margin-bottom: 15px;
@@ -176,6 +181,10 @@
 
   input:focus-visible {
     outline: var(--soft-color) solid 2px;
+  }
+
+  a:hover {
+    cursor: pointer;
   }
 
   button,
@@ -248,10 +257,17 @@
 
   th,
   td {
-    padding: 0.3em 0.2em 0.3em 0;
+    padding: 0.3em 0.5em 0.3em 0;
     text-align: left;
     border-bottom: 1px solid var(--secondary);
     border-radius: 0;
+  }
+
+  td>input {
+    width: 100%;
+    margin: 5px 0;
+    font-size: 0.9em;
+    overflow-x: scroll;
   }
 
   th {
