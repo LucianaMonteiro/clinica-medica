@@ -10,7 +10,7 @@
     --warning: #b4293e;
   }
 
-  *{
+  * {
     font-family: "Poppins", "Noto Sans", sans-serif;
     color: var(--font-primary);
     border-radius: 7px;
@@ -20,17 +20,19 @@
 
   body {
     background-color: var(--bg-color);
+    overflow-y: auto;
   }
 
   .container {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      align-content: center;
-      justify-content: center;
-      min-height: 90vh;
-      width: 90vw;
-      margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    min-height: 90vh;
+    width: 90vw;
+    margin: auto;
+    overflow: hidden;
   }
 
   .login {
@@ -38,7 +40,7 @@
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    width: 100%;
+    width: calc(250px + 10vw);
   }
 
   .home {
@@ -54,25 +56,25 @@
     background-color: var(--secondary);
   }
 
-/* Swal2 CSS */
+  /* Swal2 CSS */
 
-.swal2-actions {
-  flex-wrap: nowrap !important;
-  margin: 0 !important;
-  padding: 2em !important;
-  gap: 20px;
-}
+  .swal2-actions {
+    flex-wrap: nowrap !important;
+    margin: 0 !important;
+    padding: 2em !important;
+    gap: 20px;
+  }
 
-button.swal2-cancel {
-  color: var(--font-secondary);
-  background-color: var(--secondary);
-}
+  button.swal2-cancel {
+    color: var(--font-secondary);
+    background-color: var(--secondary);
+  }
 
-.swal2-actions button:focus {
-  outline: none;
-}
+  .swal2-actions button:focus {
+    outline: none;
+  }
 
-/* Swal2 CSS */
+  /* Swal2 CSS */
 
   .warning {
     color: var(--warning);
@@ -105,7 +107,7 @@ button.swal2-cancel {
 
   .cards,
   .content,
-  .dados, 
+  .dados,
   .titles {
     display: flex;
     flex-wrap: wrap;
@@ -150,7 +152,7 @@ button.swal2-cancel {
     justify-content: center;
     height: 13vw;
     width: 13vw;
-    padding: 15px 15px 0;
+    padding: 15px 7px 0;
     background-color: var(--primary);
   }
 
@@ -160,20 +162,19 @@ button.swal2-cancel {
     font-weight: 600;
     text-decoration: none;
     color: var(--font-primary);
-    gap: 15px;
   }
 
   .card a p {
     line-height: 1.2em;
   }
- 
+
   input {
     height: 2.5em;
     margin-bottom: 15px;
     padding-left: 10px;
   }
 
-  input:focus-visible{
+  input:focus-visible {
     outline: var(--soft-color) solid 2px;
   }
 
@@ -200,7 +201,7 @@ button.swal2-cancel {
   button:hover,
   a.button:hover,
   .card:hover {
-    box-shadow:  4px 4px 10px rgba(128, 128, 128, 0.4) !important;
+    box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.4) !important;
   }
 
   button.mini {
@@ -214,12 +215,12 @@ button.swal2-cancel {
     display: flex;
     justify-content: space-evenly;
   }
-  
+
   div.icon {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    font-size: 7rem;
+    font-size: 10cqw;
     color: var(--secondary);
   }
 
@@ -231,6 +232,8 @@ button.swal2-cancel {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    align-items: center;
+    padding-top: 5px;
     gap: 7px;
   }
 
@@ -242,7 +245,7 @@ button.swal2-cancel {
   table tbody tr td:first-child {
     white-space: nowrap;
   }
-  
+
   th,
   td {
     padding: 0.3em 0.2em 0.3em 0;
@@ -255,75 +258,62 @@ button.swal2-cancel {
     border-bottom: 2px solid var(--secondary);
   }
 
-  /* td.email {
-    text-transform: lowercase !important;
-  }
-
-  .dados td {
-    text-transform: capitalize;
-  }
-
-  .dados td {
-    text-transform: uppercase;
-  } */
-
   tr.htmx-swapping td {
     opacity: 0;
     transition: opacity 0.2s ease-out;
   }
 
-  @media (min-width: 600px) {
-    .login {
-      width: 60%;
+  @media (max-width: 992px) and (orientation: landscape) {
+    .container {
+      width: 100%;
+      overflow-x: auto;
     }
-  } 
 
-  @media (min-width: 762px) {
-    .login {
-      width: 50%;
+    .card a p {
+      font-size: 1em;
     }
-  } 
 
-  @media (min-width: 992px) {
-    .login {
-      width: 40%;
+    table {
+      font-size: 1em;
     }
-  } 
 
-  @media (min-width: 1200px) {
-    .login {
-      width: 30%;
+    th.m-hidden,
+    td.m-hidden {
+      display: none;
     }
-  } 
+  }
 
-    @media (max-width:992px) {
-      *{
-        font-size: 18px;
-      }
+  @media (max-width:992px) and (orientation: portrait) {
+    * {
+      font-size: 18px;
+    }
 
-      .container {
-        min-height: 70vh;
-        width: 95vw;
-        padding: 5px;
-        overflow-x: auto;
-      }
+    .container {
+      min-height: 70vh;
+      width: 95vw;
+      padding: 5px;
+    }
 
-      .titles h1 {
-        font-size: 5cqw;
-      }
-    
-      .titles h2 {
-        font-size: 4cqw;
-      }
-      
-      .content,
-      .dados {
-        justify-content: start;
-      }
-      
-      .cards {
-        width: 100%;
-      }
+    .login {
+      width: 85%;
+    }
+
+    .titles h1 {
+      font-size: 5cqw;
+    }
+
+    .titles h2 {
+      font-size: 4cqw;
+    }
+
+    .content,
+    .dados {
+      justify-content: start;
+    }
+
+    .cards {
+      width: 100%;
+    }
 
     .card {
       width: 100%;
@@ -337,15 +327,19 @@ button.swal2-cancel {
       justify-content: start;
       gap: 15px;
     }
-    
+
     .card a p {
       padding-top: 5px;
       font-size: 4cqw;
     }
-    
+
     .big-icon {
       padding-top: 10px;
       font-size: 10cqw;
+    }
+
+    div.icon {
+      font-size: 20cqw;
     }
 
     table {
@@ -384,4 +378,4 @@ button.swal2-cancel {
       justify-content: flex-start;
       padding-left: 0;
     }
-  } 
+  }
