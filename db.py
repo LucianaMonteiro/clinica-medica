@@ -11,9 +11,7 @@ def get_dados(tbl, id=None):
     dados = [dict(row) for row in rows]
     return dados
 
-def get_medicos():
-    return get_dados("medicos")
-
+# PACIENTES:
 def get_pacientes():
     return get_dados("pacientes")
 
@@ -35,11 +33,33 @@ def update_pacientes(id, updated:dict):
         con.commit()
     return
 
-def del_medico(id):
-    delete("medicos", id)
-
 def del_paciente(id):
     delete("pacientes", id)
+
+# MÉDICOS:
+def get_medicos():
+    return get_dados("medicos")
+
+def get_medico(id):
+    return get_dados("medicos", id)
+
+def update_medicos(id, updated:dict):
+    medico = get_medico(id)
+
+    if medico:
+        dados = medico[0]
+        dados.update(updated)
+
+        fields = [f"{k}='{v}'" for k, v in dados.items()]
+        all_fields = ",".join(fields)
+
+        sql = f"UPDATE medicos SET {all_fields} WHERE id={id}"
+        cur.execute(sql)
+        con.commit()
+    return
+
+def del_medico(id):
+    delete("medicos", id)
 
 def delete(tbl, id):
     sql = f"DELETE FROM {tbl} WHERE id={id}"

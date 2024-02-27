@@ -4,6 +4,8 @@ from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
 import json
 import urllib.parse as html
+import time
+
 
 import db
 import db_init
@@ -34,11 +36,12 @@ async def root():
 async def root():
     return "/app/login.html"
 
+# PACIENTES:
 
 @app.get("/api/pacientes")
 async def pacientes():
-    dados = db.get_pacientes()
-    return JSONResponse(dados)
+    time.sleep(2)
+    return db.get_pacientes()
 
 @app.get("/api/pacientes/{id}")
 async def pacientes(id):
@@ -56,12 +59,18 @@ async def paciente(id: str):
     db.del_paciente(id)
     return ""
 
+# MÉDICOS:
+
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos():
-    import time
-
-    time.sleep(5)
+    time.sleep(2)
     return db.get_medicos()
+
+@app.put("/api/medicos/{id}", response_class=JSONResponse)
+async def update_medicos(id, body=Depends(get_body)):
+    db.update_medicos(id, body)
+    dados = db.get_medicos()
+    return dados
 
 @app.delete("/api/medicos/{id}", response_class=HTMLResponse)
 async def medico(id: str):
@@ -82,6 +91,16 @@ async def edit_paciente(id):
     if paciente:
         dados = paciente[0]
         return edit.paciente_html(dados)
+    else:
+        return ""
+    
+@app.get("/api/medicos/{id}/edit", response_class=HTMLResponse)
+async def edit_medico(id):
+    medico = db.get_medico(id)
+
+    if medico:
+        dados = medico[0]
+        return edit.medico_html(dados)
     else:
         return ""
 

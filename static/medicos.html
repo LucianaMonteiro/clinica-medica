@@ -53,12 +53,14 @@
                                 <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                                 <td class="icon">
                                     <div>
-                                        <a href="#">
+                                        <a hx-target="closest tr" hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit"
+                                            hx-swap="outerHTML" onclick="onClick(this)">
                                             <i class="material-symbols-outlined"> edit </i>
                                         </a>
 
-                                        <a hx-confirm="{{nome}}?" hx-delete="/api/medicos/{{id}}">
-                                            <i class="material-symbols-outlined"> edit </i>
+                                        <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
+                                            hx-delete="/api/medicos/{{id}}">
+                                            <i class="material-symbols-outlined"> delete </i>
                                         </a>
                                     </div>
                             </tr>
