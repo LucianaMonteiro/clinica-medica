@@ -195,7 +195,7 @@
 
   select {
     width: 100%;
-    height: 2.6em;
+    height: 2.5em;
     line-height: 2.5em;
     background: #fff;
   }
@@ -244,9 +244,14 @@
     font-weight: 500;
   }
 
+  button.alone {
+    margin-top: 20px;
+  }
+
   div.buttons {
     display: flex;
     justify-content: space-evenly;
+    gap: 1em;
   }
 
   div.icon {
@@ -287,7 +292,16 @@
     border-radius: 0;
   }
 
-  td>input {
+  /* td:has(button) {
+    border: none;
+  } */
+
+  td.no-border {
+    border: none;
+  }
+
+  td>input,
+  td>select {
     width: 100%;
     margin: 5px 0;
     font-size: 0.9em;

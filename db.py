@@ -18,7 +18,7 @@ def add_paciente(new_paciente: dict):
     add("pacientes", new_paciente)
 
 
-def update_pacientes(id, updated: dict):
+def update_paciente(id, updated: dict):
     paciente = get_paciente(id)
     update(id, "pacientes", paciente, updated)
 
@@ -40,7 +40,7 @@ def add_medico(new_medico: dict):
     add("medicos", new_medico)
 
 
-def update_medicos(id, updated: dict):
+def update_medico(id, updated: dict):
     medico = get_medico(id)
     update(id, "medicos", medico, updated)
 
