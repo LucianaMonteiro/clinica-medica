@@ -46,7 +46,7 @@
                             <!-- {{#data}} -->
                             <tr>
                                 <td title="{{id}}" class="u-case">{{nome}}</td>
-                                <td>{{crm}}</td>
+                                <td data-th="CRM">{{crm}}</td>
                                 <td data-th="Email" class="m-hidden"><span class="l-case">{{email}}</span>
                                 <td data-th="Área" class="fl-case l-case">{{especialidade}}</td>
                                 <td data-th="Turno" class="fl-case l-case">{{turno}}</td>
@@ -83,6 +83,8 @@
                         </tbody>
                     </table>
                 </template>
+                <div id="toast" class="animate__animated animate__faster">
+                    <!-- Exibir mensagem de erro -->
             </div>
         </div>
     </div>

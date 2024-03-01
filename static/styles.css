@@ -1,435 +1,456 @@
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-  :root {
-    --bg-color: #d9d9d9;
-    --primary: #c3ffb4;
-    --secondary: #959595;
-    --soft-color: #afafaa;
-    --font-primary: #7d7d7d;
-    --font-secondary: #dadada;
-    --warning: #b4293e;
-  }
+:root {
+  --bg-color: #d9d9d9;
+  --primary: #c3ffb4;
+  --secondary: #959595;
+  --soft-color: #afafaa;
+  --font-primary: #7d7d7d;
+  --font-secondary: #dadada;
+  --warning: #b4293e;
+}
 
-  * {
-    font-family: "Poppins", "Noto Sans", sans-serif;
-    color: var(--font-primary);
-    border-radius: 7px;
-    border: solid 0px transparent;
-    box-sizing: border-box;
-  }
+* {
+  font-family: "Poppins", "Noto Sans", sans-serif;
+  color: var(--font-primary);
+  border-radius: 7px;
+  border: solid 0px transparent;
+  box-sizing: border-box;
+}
 
-  body {
-    background-color: var(--bg-color);
-    overflow-y: auto;
-  }
+body {
+  background-color: var(--bg-color);
+  overflow-y: auto;
+}
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  min-height: 90vh;
+  width: 90vw;
+  padding: 30px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: calc(250px + 10vw);
+}
+
+.home {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.secondary {
+  color: var(--font-secondary);
+  background-color: var(--secondary);
+}
+
+
+/* Swal2 CSS */
+
+.swal2-actions {
+  flex-wrap: nowrap !important;
+  margin: 0 !important;
+  padding: 2em !important;
+  gap: 20px;
+}
+
+button.swal2-cancel {
+  color: var(--font-secondary);
+  background-color: var(--secondary);
+}
+
+.swal2-actions button:focus {
+  outline: none;
+}
+
+/* Swal2 CSS */
+
+
+#toast {
+  position: fixed;
+  visibility: hidden;
+  top: calc(50vh - 50px);
+  width: calc(50vw + 50px); 
+  padding: 0.5em;
+  align-self: center;
+  font-size: 1.3rem;
+  text-align: center;
+  color: var(--font-secondary);
+  background-color: var(--warning);
+  z-index: 1000;
+}
+
+#toast.show {
+  visibility: visible;
+}
+
+.warning {
+  color: var(--warning);
+  font-weight: 500;
+}
+
+.small-icon {
+  font-size: 1.7em;
+}
+
+.big-icon {
+  font-size: 6cqw;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.u-case {
+  text-transform: uppercase;
+}
+
+.l-case {
+  text-transform: lowercase;
+}
+
+*.fl-case:first-letter {
+  text-transform: uppercase;
+}
+
+.cards,
+.content,
+.dados,
+.titles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* align-content: center; */
+  width: 95%;
+  gap: 20px;
+}
+
+.dados {
+  width: 100%;
+}
+
+.titles {
+  flex-direction: column;
+  padding: 40px 0;
+}
+
+.titles h1,
+.titles h2 {
+  text-align: center;
+  line-height: 1em;
+  margin: 0.2em;
+}
+
+.titles h1 {
+  font-size: 2.5cqw;
+}
+
+.titles h2 {
+  font-size: 2cqw;
+}
+
+.cards {
+  width: 60%;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  height: 13vw;
+  width: 13vw;
+  padding: 15px 7px 0;
+  background-color: var(--primary);
+}
+
+.card a {
+  text-align: center;
+  font-size: 1.4cqw;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--font-primary);
+}
+
+.card a p {
+  line-height: 1.2em;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  height: 2.5em;
+  margin-bottom: 15px;
+  padding-left: 10px;
+}
+
+input:focus-visible,
+select:focus-visible {
+  outline: var(--soft-color) solid 2px;
+}
+
+select {
+  width: 100%;
+  height: 2.5em;
+  line-height: 2.5em;
+  background: #fff;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+button,
+a.button {
+  height: 3em;
+  width: 100%;
+  margin-bottom: 10px;
+  color: var(--font-primary);
+  font-size: 1.05em;
+  font-weight: 600;
+  text-align: center;
+  background-color: var(--primary);
+}
+
+a.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+}
+
+select,
+input,
+button {
+  outline: none;
+}
+
+select:hover,
+input:hover,
+button:hover,
+a.button:hover,
+.card:hover {
+  box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.4) !important;
+}
+
+button.mini {
+  height: 1.9em;
+  width: 13em;
+  font-size: 0.75em;
+  font-weight: 500;
+}
+
+button.alone {
+  margin-top: 20px;
+}
+
+div.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1em;
+}
+
+div.icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  font-size: 10cqw;
+  color: var(--secondary);
+}
+
+td.icon {
+  cursor: pointer;
+}
+
+td.icon div {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 5px;
+  gap: 7px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table tbody tr td:first-child {
+  white-space: nowrap;
+}
+
+th,
+td {
+  padding: 0.3em 0.5em 0.3em 0;
+  text-align: left;
+  border-bottom: 1px solid var(--secondary);
+  border-radius: 0;
+}
+
+/* td:has(button) {
+  border: none;
+} */
+
+td.no-border {
+  border: none;
+}
+
+td>input,
+td>select {
+  width: 100%;
+  margin: 5px 0;
+  font-size: 0.9em;
+  overflow-x: scroll;
+}
+
+th {
+  border-bottom: 2px solid var(--secondary);
+}
+
+tr.htmx-swapping td {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+@media (max-width: 992px) and (orientation: landscape) {
   .container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    min-height: 90vh;
-    width: 90vw;
-    padding: 30px;
-    margin: auto;
-    overflow: hidden;
-  }
-
-  .login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    width: calc(250px + 10vw);
-  }
-
-  .home {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
-
-  .secondary {
-    color: var(--font-secondary);
-    background-color: var(--secondary);
-  }
-
-  /* Swal2 CSS */
-
-  .swal2-actions {
-    flex-wrap: nowrap !important;
-    margin: 0 !important;
-    padding: 2em !important;
-    gap: 20px;
-  }
-
-  button.swal2-cancel {
-    color: var(--font-secondary);
-    background-color: var(--secondary);
-  }
-
-  .swal2-actions button:focus {
-    outline: none;
-  }
-
-  /* Swal2 CSS */
-
-  .warning {
-    color: var(--warning);
-    font-weight: 500;
-  }
-
-  .small-icon {
-    font-size: 1.7em;
-  }
-
-  .big-icon {
-    font-size: 6cqw;
-  }
-
-  .w-100 {
     width: 100%;
-  }
-
-  .w-10 {
-    width: 10%;
-  }
-
-  .w-15 {
-    width: 15%;
-  }
-
-  .u-case {
-    text-transform: uppercase;
-  }
-
-  .l-case {
-    text-transform: lowercase;
-  }
-
-  *.fl-case:first-letter {
-    text-transform: uppercase;
-  }
-
-  .cards,
-  .content,
-  .dados,
-  .titles {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* align-content: center; */
-    width: 95%;
-    gap: 20px;
-  }
-
-  .dados {
-    width: 100%;
-  }
-
-  .titles {
-    flex-direction: column;
-    padding: 40px 0;
-  }
-
-  .titles h1,
-  .titles h2 {
-    text-align: center;
-    line-height: 1em;
-    margin: 0.2em;
-  }
-
-  .titles h1 {
-    font-size: 2.5cqw;
-  }
-
-  .titles h2 {
-    font-size: 2cqw;
-  }
-
-  .cards {
-    width: 60%;
-  }
-
-  .card {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    height: 13vw;
-    width: 13vw;
-    padding: 15px 7px 0;
-    background-color: var(--primary);
-  }
-
-  .card a {
-    text-align: center;
-    font-size: 1.4cqw;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--font-primary);
+    overflow-x: auto;
   }
 
   .card a p {
-    line-height: 1.2em;
-  }
-
-  .spinner {
-    display: flex;
-    justify-content: center;
-  }
-
-  input {
-    height: 2.5em;
-    margin-bottom: 15px;
-    padding-left: 10px;
-  }
-
-  input:focus-visible,
-  select:focus-visible {
-    outline: var(--soft-color) solid 2px;
-  }
-
-  select {
-    width: 100%;
-    height: 2.5em;
-    line-height: 2.5em;
-    background: #fff;
-  }
-
-  a:hover {
-    cursor: pointer;
-  }
-
-  button,
-  a.button {
-    height: 3em;
-    width: 100%;
-    margin-bottom: 10px;
-    color: var(--font-primary);
-    font-size: 1.05em;
-    font-weight: 600;
-    text-align: center;
-    background-color: var(--primary);
-  }
-
-  a.button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-decoration: none;
-  }
-
-  select,
-  input,
-  button {
-    outline: none;
-  }
-
-  select:hover,
-  input:hover,
-  button:hover,
-  a.button:hover,
-  .card:hover {
-    box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.4) !important;
-  }
-
-  button.mini {
-    height: 1.9em;
-    width: 13em;
-    font-size: 0.75em;
-    font-weight: 500;
-  }
-
-  button.alone {
-    margin-top: 20px;
-  }
-
-  div.buttons {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 1em;
-  }
-
-  div.icon {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    font-size: 10cqw;
-    color: var(--secondary);
-  }
-
-  td.icon {
-    cursor: pointer;
-  }
-
-  td.icon div {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    padding-top: 5px;
-    gap: 7px;
+    font-size: 1em;
   }
 
   table {
+    font-size: 1em;
+  }
+
+  th.m-hidden,
+  td.m-hidden {
+    display: none;
+  }
+}
+
+@media (max-width:992px) and (orientation: portrait) {
+  * {
+    font-size: 18px;
+  }
+
+  .container {
+    min-height: 70vh;
+    width: 95vw;
+    padding: 5px;
+  }
+
+  .login {
+    width: 85%;
+  }
+
+  .titles h1 {
+    font-size: 5cqw;
+  }
+
+  .titles h2 {
+    font-size: 4cqw;
+  }
+
+  .content,
+  .dados {
+    justify-content: start;
+  }
+
+  .cards {
     width: 100%;
-    border-collapse: collapse;
   }
 
-  table tbody tr td:first-child {
-    white-space: nowrap;
-  }
-
-  th,
-  td {
-    padding: 0.3em 0.5em 0.3em 0;
-    text-align: left;
-    border-bottom: 1px solid var(--secondary);
-    border-radius: 0;
-  }
-
-  /* td:has(button) {
-    border: none;
-  } */
-
-  td.no-border {
-    border: none;
-  }
-
-  td>input,
-  td>select {
+  .card {
     width: 100%;
-    margin: 5px 0;
-    font-size: 0.9em;
-    overflow-x: scroll;
+    justify-content: start;
+  }
+
+  .card a {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    text-align: start;
+    justify-content: start;
+    gap: 15px;
+  }
+
+  .card a p {
+    padding-top: 5px;
+    font-size: 4cqw;
+  }
+
+  .big-icon {
+    padding-top: 10px;
+    font-size: 10cqw;
+  }
+
+  div.icon {
+    font-size: 20cqw;
+  }
+
+  table {
+    font-size: 1.3em;
+    overflow-x: auto;
   }
 
   th {
-    border-bottom: 2px solid var(--secondary);
+    display: none;
   }
 
-  tr.htmx-swapping td {
-    opacity: 0;
-    transition: opacity 0.2s ease-out;
+  td {
+    display: block;
   }
 
-  @media (max-width: 992px) and (orientation: landscape) {
-    .container {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    .card a p {
-      font-size: 1em;
-    }
-
-    table {
-      font-size: 1em;
-    }
-
-    th.m-hidden,
-    td.m-hidden {
-      display: none;
-    }
+  td:before {
+    content: attr(data-th) ": ";
+    font-weight: 600;
   }
 
-  @media (max-width:992px) and (orientation: portrait) {
-    * {
-      font-size: 18px;
-    }
-
-    .container {
-      min-height: 70vh;
-      width: 95vw;
-      padding: 5px;
-    }
-
-    .login {
-      width: 85%;
-    }
-
-    .titles h1 {
-      font-size: 5cqw;
-    }
-
-    .titles h2 {
-      font-size: 4cqw;
-    }
-
-    .content,
-    .dados {
-      justify-content: start;
-    }
-
-    .cards {
-      width: 100%;
-    }
-
-    .card {
-      width: 100%;
-      justify-content: start;
-    }
-
-    .card a {
-      display: inline-flex;
-      flex-wrap: nowrap;
-      text-align: start;
-      justify-content: start;
-      gap: 15px;
-    }
-
-    .card a p {
-      padding-top: 5px;
-      font-size: 4cqw;
-    }
-
-    .big-icon {
-      padding-top: 10px;
-      font-size: 10cqw;
-    }
-
-    div.icon {
-      font-size: 20cqw;
-    }
-
-    table {
-      font-size: 1.3em;
-      overflow-x: auto;
-    }
-
-    th {
-      display: none;
-    }
-
-    td {
-      display: block;
-    }
-
-    td:before {
-      content: attr(data-th) ": ";
-      font-weight: 600;
-    }
-
-    td:first-child:before,
-    td:last-child:before,
-    td:has(input):before {
-      content: "";
-    }
-
-    td:first-child {
-      font-weight: 600;
-    }
-
-    td:last-child {
-      margin-bottom: 30px;
-    }
-
-    td.icon div {
-      justify-content: flex-start;
-      padding-left: 0;
-    }
+  td:first-child:before,
+  td:last-child:before,
+  td:has(select)::before,
+  td:has(input):before {
+    content: "";
   }
+
+  td:first-child {
+    font-weight: 600;
+  }
+
+  td:last-child {
+    margin-bottom: 30px;
+  }
+
+  td.icon div {
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+}

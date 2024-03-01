@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
@@ -11,6 +11,8 @@ import db
 import db_init
 import static.fragments.html_add as add
 import static.fragments.html_edit as edit
+
+ERR_MSG = "Todos os campos precisam ser preenchidos!"
 
 app = FastAPI()
 app.mount("/app", StaticFiles(directory="static", html="True"), name="static")
@@ -57,9 +59,12 @@ async def pacientes(id: int):
 
 @app.put("/api/pacientes/{id}", response_class=JSONResponse)
 async def update_paciente(id: int, body=Depends(get_body)):
-    db.update_paciente(id, body)
-    dados = db.get_pacientes()
-    return dados
+    if is_valid(body, 4):
+        db.update_paciente(id, body)
+        dados = db.get_pacientes()
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.post("/api/pacientes", response_class=JSONResponse)
@@ -67,8 +72,10 @@ async def add_paciente(body=Depends(get_body)):
     if is_valid(body, 4):
         db.add_paciente(body)
 
-    dados = db.get_pacientes()
-    return dados
+        dados = db.get_pacientes()
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
@@ -88,18 +95,22 @@ async def medicos():
 
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
 async def update_medico(id: int, body=Depends(get_body)):
-    db.update_medico(id, body)
-    dados = db.get_medicos()
-    return dados
+    if is_valid(body, 6):
+        db.update_medico(id, body)
+        dados = db.get_medicos()
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
     if is_valid(body, 6):
         db.add_medico(body)
-
-    dados = db.get_medicos()
-    return dados
+        dados = db.get_medicos()
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.delete("/api/medicos/{id}", response_class=HTMLResponse)
@@ -129,7 +140,7 @@ async def edit_paciente(id: int):
         dados = paciente[0]
         return edit.paciente_html(dados)
     else:
-        return ""
+        raise HTTPException(status_code=404)
 
 
 @app.get("/api/medicos/{id}/edit", response_class=HTMLResponse)
@@ -140,7 +151,7 @@ async def edit_medico(id: int):
         dados = medico[0]
         return edit.medico_html(dados)
     else:
-        return ""
+        raise HTTPException(status_code=404)
 
 
 # resetar o banco de dados:
