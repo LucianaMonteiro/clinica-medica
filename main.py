@@ -93,6 +93,12 @@ async def medicos():
     return db.get_medicos()
 
 
+@app.get("/api/medicos/{id}")
+async def medicos(id: int):
+    dados = db.get_medico(id)
+    return JSONResponse(dados)
+
+
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
 async def update_medico(id: int, body=Depends(get_body)):
     if is_valid(body, 6):
