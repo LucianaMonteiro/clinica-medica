@@ -1,16 +1,14 @@
 # Criar a estrutura inicial do banco de dados em SQLite3.
 
-import sqlite3
+import connection
 
 
 print(f"Script {__name__} executado.")
 
-
 def tbl_create():
     """Criar as tabelas MEDICOS e PACIENTES."""
 
-    con = sqlite3.connect("clinica.db")
-    cur = con.cursor()
+    con, cur = connection.get()
 
     try:
         cur.execute("DROP TABLE medicos")
@@ -53,25 +51,10 @@ def tbl_create():
 def tables_init():
     """Incluir dados iniciais de teste nas tabelas."""
 
-    con = sqlite3.connect("clinica.db")
-    cur = con.cursor()
-
-    # cur.execute(
-    #     """
-    #         INSERT INTO medicos VALUES (
-    #             "Kaio Oliveira",
-    #             "123456",
-    #             "kaio@gmail.com",
-    #             "cardiologia",
-    #             "noturno",
-    #             "ativo"
-    #         )
-    #     """
-    # )
+    con, cur = connection.get()
 
     medicos = [
         (
-            None,
             "Kaio Oliveira",
             "123456",
             "kaio@gmail.com",
@@ -80,7 +63,6 @@ def tables_init():
             "ativo",
         ),
         (
-            None,
             "Dileyciane Monteiro",
             "234567",
             "ciane@gmail.com",
@@ -89,7 +71,6 @@ def tables_init():
             "em análise",
         ),
         (
-            None,
             "naelle monteiro",
             "345678",
             "NAELLE@gmail.com",
@@ -100,15 +81,19 @@ def tables_init():
     ]
 
     pacientes = [
-        (None, "izaias lima", "izaias@lima.com", "61 98181-3390", "internado"),
-        (None, "Luciete Lima", "luciete@lima.com", "61 98136-0050", "em atendimento"),
+        ("izaias lima", "izaias@lima.com", "61 98181-3390", "internado"),
+        ("Luciete Lima", "luciete@lima.com", "61 98136-0050", "em atendimento"),
     ]
 
     cur.execute("DELETE FROM medicos")
     cur.execute("DELETE FROM pacientes")
 
-    cur.executemany("INSERT INTO medicos values (?,?,?,?,?,?,?)", medicos)
-    cur.executemany("INSERT INTO pacientes values (?,?,?,?,?)", pacientes)
+    if connection.DB_TYPE == "psql":
+        cur.executemany("INSERT INTO medicos values (DEFAULT,%s,%s,%s,%s,%s,%s)", medicos)
+        cur.executemany("INSERT INTO pacientes values (DEFAULT,%s,%s,%s,%s)", pacientes)
+    else:
+        cur.executemany("INSERT INTO medicos values (NULL,?,?,?,?,?,?)", medicos)
+        cur.executemany("INSERT INTO pacientes values (NULL,?,?,?,?)", pacientes)
 
     con.commit()
     con.close()

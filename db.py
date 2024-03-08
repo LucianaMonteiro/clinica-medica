@@ -1,9 +1,6 @@
-import sqlite3 as s
+import connection
 
-con = s.connect("clinica.db")
-con.row_factory = s.Row
-cur = con.cursor()
-
+con, cur = connection.get()
 
 # PACIENTES:
 def get_pacientes():
@@ -55,7 +52,9 @@ def del_medico(id):
 def get_dados(tbl, id=None):
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE id={id}" if id else ""
-    rows = cur.execute(sql).fetchall()
+    sql += " ORDER BY 2"
+    cur.execute(sql)
+    rows = cur.fetchall()
     dados = [dict(row) for row in rows]
     return dados
 
@@ -65,7 +64,11 @@ def add(table, dados: dict):
         values = [f"'{v}'" for _, v in dados.items()]
         all_values = ",".join(values)
 
-        sql = f"INSERT INTO {table} values (NULL, {all_values})"
+        if connection.DB_TYPE == "psql":
+            sql = f"INSERT INTO {table} values (DEFAULT, {all_values})"
+        else:
+            sql = f"INSERT INTO {table} values (NULL, {all_values})"
+
         cur.execute(sql)
         con.commit()
 
