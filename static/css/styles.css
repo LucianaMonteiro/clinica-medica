@@ -55,8 +55,8 @@ body {
 }
 
 .secondary {
-  color: var(--font-secondary);
-  background-color: var(--secondary);
+  color: var(--font-secondary) !important;
+  background-color: var(--secondary) !important;
 }
 
 
@@ -85,7 +85,8 @@ button.swal2-cancel {
   position: fixed;
   visibility: hidden;
   top: calc(50vh - 50px);
-  width: calc(50vw + 50px); 
+  width: calc(50vw + 50px);
+  margin: auto;
   padding: 0.5em;
   align-self: center;
   font-size: 1.3rem;
@@ -235,6 +236,7 @@ a.button {
   height: 3em;
   width: 100%;
   margin-bottom: 10px;
+  padding: 0 1rem;
   color: var(--font-primary);
   font-size: 1.05em;
   font-weight: 600;
@@ -293,18 +295,33 @@ td.icon {
   cursor: pointer;
 }
 
-td.icon div {
+td.icon div,
+td.button div {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-evenly;
   align-items: center;
-  padding-top: 5px;
-  gap: 7px;
+  padding: 10px 30px;
+  gap: 30px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+}
+
+table.form {
+  width: 60vw;
+  margin: auto;
+}
+
+table.form th {
+  display: none;
+}
+
+table.form td {
+  display: block;
+  border-bottom: none;
 }
 
 table tbody tr td:first-child {
@@ -357,6 +374,7 @@ tr.htmx-swapping td {
     font-size: 1em;
   }
 
+
   th.m-hidden,
   td.m-hidden {
     display: none;
@@ -379,11 +397,11 @@ tr.htmx-swapping td {
   }
 
   .titles h1 {
-    font-size: 5cqw;
+    font-size: 1.5rem;
   }
 
   .titles h2 {
-    font-size: 4cqw;
+    font-size: 1.1rem;
   }
 
   .content,
@@ -418,6 +436,10 @@ tr.htmx-swapping td {
     font-size: 10cqw;
   }
 
+  #toast {
+    width: 90%;
+  }
+
   div.icon {
     font-size: 20cqw;
   }
@@ -425,6 +447,10 @@ tr.htmx-swapping td {
   table {
     font-size: 1.3em;
     overflow-x: auto;
+  }
+
+  table.form {
+    width: 90vw;
   }
 
   th {
@@ -458,5 +484,13 @@ tr.htmx-swapping td {
   td.icon div {
     justify-content: flex-start;
     padding-left: 0;
+  }
+
+  td.button div {
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 10px 0 0;
+    gap: 0;
   }
 }
