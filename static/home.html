@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Médica</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
 </head>
+
 <body>
     <div class="container">
-        <div class="titles"> 
-            <h1>Clínica Médica</h1>  
+        <div class="titles">
+            <h1>Clínica Médica</h1>
         </div>
 
         <div class="home">
@@ -30,14 +35,14 @@
                 </div>
 
                 <div class="card">
-                    <a href="#">
+                    <a href="#" onclick="showToast('Agendamento de consultas indisponível no momento.')">
                         <i class="material-symbols-outlined big-icon"> clinical_notes </i>
                         <p>Agendamento de Consultas</p>
                     </a>
                 </div>
 
                 <div class="card">
-                    <a href="#">
+                    <a href="#" onclick="showToast('Cancelamento de consultas indisponível no momento.')">
                         <i class="material-symbols-outlined big-icon"> person_cancel </i>
                         <p>Cancelamento de Consultas</p>
                     </a>
@@ -54,15 +59,23 @@
                 </div>
 
                 <div class="card">
-                    <a href="#">
+                    <a href="#" onclick="showToast('Emissão de relatórios indisponível no momento.')">
                         <i class="material-symbols-outlined big-icon"> monitoring </i>
                         <p>Emissão de Relatórios</p>
                     </a>
                 </div>
-                
+
             </div>
         </div>
- 
+
+        <div id="toast" class="animate__animated animate__faster">
+            <!-- Exibir mensagem de erro -->
+        </div>
+
     </div>
+
+    <script src="./js/functions.js"></script>
+
 </body>
+
 </html>

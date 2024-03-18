@@ -20,12 +20,16 @@ document.addEventListener(
 );
 
 document.addEventListener('htmx:responseError', evt => {
-    const elm = document.getElementById('toast');
-    error = JSON.parse(evt.detail.xhr.responseText);
-    elm.innerHTML = error.detail;
-    elm.classList.add('show', 'animate__fadeInUp');
-    setTimeout(function () {elm.classList.remove('show', 'animate__fadeInUp')}, 3000);
+    const error = JSON.parse(evt.detail.xhr.responseText);
+    showToast(error.detail);
 });
+
+function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.innerHTML = msg;
+    toast.classList.add('show', 'animate__fadeInUp');
+    setTimeout(function () {toast.classList.remove('show', 'animate__fadeInUp')}, 3000);
+}
 
 function showDetail() {
     const detalhe = document.getElementById('detalhe');
