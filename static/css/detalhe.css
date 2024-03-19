@@ -3,6 +3,7 @@
     position: fixed;
     visibility: hidden;
     top: 0;
+    left: 0;
     height: 100vh;
     width: 100vw;
     margin: 0;
@@ -20,6 +21,7 @@
     display: flex;
     flex-direction: column;
     align-self: center;
+    height: 95%;
     width: 70%;
     margin: auto;
     padding: 25px;
@@ -27,6 +29,7 @@
     color: var(--font-secondary);
     background-color: #e0e0e0;
     border-radius: var(--border-radius);
+    overflow-y: scroll;
     z-index: 1000;
 }
 
@@ -52,6 +55,15 @@
     padding: 5px 10px;
 }
 
+#detalhe>#info ul>li.endereco {
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#detalhe>#info ul>li.endereco div {
+    padding-left: 30px;
+}
+
 #detalhe>#info ul>li:nth-child(even) {
     background-color: var(--bg-secondary);
 }
@@ -67,4 +79,25 @@
 
 #detalhe>#info ul>li>label::after {
    content: ":\A0";
+}
+
+@media (max-width: 992px) and (orientation: portrait){
+    #detalhe>#info {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        overflow-y: auto;
+    }
+
+    #detalhe>#info ul>li {
+        flex-direction: column;
+    }
+
+    #detalhe>#info ul>li>div::before {
+        display: block;
+    }
+
+    #detalhe>#info ul>li.endereco div {
+        padding-left: 0;
+    }
 }
