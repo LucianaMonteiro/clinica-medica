@@ -1,5 +1,6 @@
 def paciente_html(dados):
     html = f"""
+        <table class="form">
         <tr trigger="cancel" class="editing">
             <td><input name="nome" value="{dados['nome']}"></td>
             <td><input name="email" value="{dados['email']}"></td>
@@ -17,29 +18,31 @@ def paciente_html(dados):
             </td>
             <td class="icon">
                 <div>
-                    <a hx-get="/api/pacientes"
+                    <a class="button secondary" hx-get="/api/pacientes"
                         title="Cancelar a alteração"
                         hx-swap="outerHTML" 
                         hx-target="closest table">
-                        <i class="material-symbols-outlined small-icon">undo</i>
+                        Cancelar
                     </a>
                 
-                    <a hx-trigger="click" 
+                    <a class="button" hx-trigger="click" 
                         hx-include="closest tr"
                         hx-put="/api/pacientes/{dados['id']}" 
                         title="Salvar"
                         hx-swap="outerHTML" 
                         hx-target="closest table">
-                        <i class="material-symbols-outlined small-icon">save</i>
+                        Salvar
                     </a>
                 </div>
             </td>
         </tr>
+        </table>
         """
     return html
 
 def medico_html(dados):
     html = f"""
+        <table class="form">
         <tr trigger="cancel" class="editing">
             <td><input name="nome" value="{dados['nome']}"></td>
             <td><input name="crm" value="{dados['crm']}"></td>
@@ -66,23 +69,24 @@ def medico_html(dados):
             </td>
             <td class="icon">
                 <div>
-                    <a hx-get="/api/medicos"
+                    <a class="button secondary" hx-get="/api/medicos"
                         title="Cancelar a alteração"
                         hx-swap="outerHTML" 
                         hx-target="closest table">
-                        <i class="material-symbols-outlined small-icon">undo</i>
+                        Cancelar
                     </a>
                 
-                    <a hx-trigger="click" 
+                    <a class="button" hx-trigger="click" 
                         hx-include="closest tr"
                         hx-put="/api/medicos/{dados['id']}" 
                         title="Salvar"
                         hx-swap="outerHTML" 
                         hx-target="closest table">
-                        <i class="material-symbols-outlined small-icon">save</i>
+                        Salvar
                     </a>
                 </div>
             </td>
         </tr>
+        </table>
         """
     return html

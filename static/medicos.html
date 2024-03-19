@@ -58,16 +58,16 @@
                                 <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                                 <td class="icon">
                                     <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                        <a title="Detalhar informações do Médico" hx-get="/api/medicos/{{id}}"
+                                        <a title="Detalhar informações do médico" hx-get="/api/medicos/{{id}}"
                                             hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
                                             <i class="material-symbols-outlined"> clinical_notes </i>
                                         </a>
-                                        <a hx-target="closest tr" hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit"
+                                        <a title="Editar dados do médico" hx-target="closest table" hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit"
                                             hx-swap="outerHTML" onclick="onClick(this)">
                                             <i class="material-symbols-outlined"> edit </i>
                                         </a>
 
-                                        <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
+                                        <a title="Excluir o registro do médico" hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
                                             hx-delete="/api/medicos/{{id}}">
                                             <i class="material-symbols-outlined"> delete </i>
                                         </a>
