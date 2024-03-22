@@ -29,7 +29,7 @@
     color: var(--font-secondary);
     background-color: #e0e0e0;
     border-radius: var(--border-radius);
-    overflow-y: scroll;
+    overflow-y: auto;
     z-index: 1000;
 }
 

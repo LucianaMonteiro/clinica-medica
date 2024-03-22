@@ -2,6 +2,7 @@ import connection
 
 con, cur = connection.get()
 
+
 # PACIENTES:
 def get_pacientes():
     return get_dados("pacientes")
@@ -64,8 +65,13 @@ def add(table, dados: dict):
         values = [f"'{v}'" for _, v in dados.items()]
         all_values = ",".join(values)
 
+        fields = [f"{k}" for k, _ in dados.items()]
+        all_fields = ",".join(fields)
+
         if connection.DB_TYPE == connection.TYPE_PSQL:
-            sql = f"INSERT INTO {table} values (DEFAULT, {all_values})"
+            sql = (
+                f"INSERT INTO {table} (id, {all_fields}) values (DEFAULT, {all_values})"
+            )
         else:
             sql = f"INSERT INTO {table} values (NULL, {all_values})"
 

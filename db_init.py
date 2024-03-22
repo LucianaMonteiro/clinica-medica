@@ -132,9 +132,6 @@ def tables_init():
     cur.execute("DELETE FROM medicos")
     cur.execute("DELETE FROM pacientes")
 
-    # OPERADOR TERNARIO
-    # var = "algo" if True Else "outro" (python)
-    # var = True ? "algo" : "outro" (Java e JavaScript)
 
     if connection.DB_TYPE == connection.TYPE_PSQL:
         cur.executemany(
@@ -164,3 +161,7 @@ if __name__ == "__main__":
     drop_tables()
     tbl_create()
     tables_init()
+
+    # OPERADOR TERNARIO
+    # var = "algo" if True Else "outro" (python)
+    # var = True ? "algo" : "outro" (Java e JavaScript)
