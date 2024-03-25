@@ -57,7 +57,7 @@ async def pacientes(id: int):
 
 @app.put("/api/pacientes/{id}", response_class=JSONResponse)
 async def update_paciente(id: int, body=Depends(get_body)):
-    if is_valid(body, 6):
+    if is_valid(body, 11):
         db.update_paciente(id, body)
         dados = db.get_pacientes()
         return dados
@@ -67,7 +67,7 @@ async def update_paciente(id: int, body=Depends(get_body)):
 
 @app.post("/api/pacientes", response_class=JSONResponse)
 async def add_paciente(body=Depends(get_body)):
-    if is_valid(body, 5):
+    if is_valid(body, 11):
         db.add_paciente(body)
 
         dados = db.get_pacientes()

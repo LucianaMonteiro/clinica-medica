@@ -13,6 +13,14 @@ def get_paciente(id):
 
 
 def add_paciente(new_paciente: dict):
+    fields = {
+        "logradouro":"Rua 12 Norte, lote 6",
+        "cep": "71909-540",
+        "cidade":"Brasília",
+        "uf":"DF"
+    }
+    new_paciente.update(fields)
+
     add("pacientes", new_paciente)
 
 
@@ -73,7 +81,7 @@ def add(table, dados: dict):
                 f"INSERT INTO {table} (id, {all_fields}) values (DEFAULT, {all_values})"
             )
         else:
-            sql = f"INSERT INTO {table} values (NULL, {all_values})"
+            f"INSERT INTO {table} (id, {all_fields}) values (NULL, {all_values})"
 
         cur.execute(sql)
         con.commit()
