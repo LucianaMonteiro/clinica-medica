@@ -29,7 +29,7 @@
                 <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
                     mustache-array-template="paciente-template">
                     <!-- Chamada da API - Dados vão ser exibidos aqui! -->
-                    <div class="spinner">
+                    <div class="center">
                         <img width="120px" src="./icons/spinner.svg" alt="">
                     </div>
                 </div>
@@ -55,13 +55,13 @@
                                 <td data-th="Situação" class="fl-case">{{status}}</td>
                                 <td class="icon">
                                     <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                        <a title="Detalhar informações do paciente" hx-get="/api/pacientes/{{id}}"
-                                            hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
+                                        <a title="Detalhar informações do paciente" hx-trigger="click" hx-get="/html/pacientes/{{id}}/detalhe"
+                                            hx-target="closest table" hx-swap="outerHTML">
                                             <i class="material-symbols-outlined"> clinical_notes </i>
                                         </a>
                                         <a title="Editar dados do paciente" hx-target="closest table"
-                                            hx-get="/api/pacientes/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
-                                            onclick="onClick(this)">
+                                            hx-get="/html/pacientes/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
+                                            onclick="allowsEditing(this)">
                                             <i class="material-symbols-outlined"> edit </i>
                                         </a>
                                         <a title="Excluir o registro do paciente" hx-target="closest tr"
@@ -81,101 +81,20 @@
                             <!-- {{/data}} -->
 
                             <tr>
-                                <td class="no-border">
-                                    <button class="alone" hx-trigger="click" hx-get="/api/pacientes/0/add"
+                                <td>
+                                    <div class="buttons">
+                                        <button class="alone" hx-trigger="click" hx-get="/html/pacientes/new/add"
                                         hx-target="closest table" hx-swap="outerHTML">
                                         Cadastrar Paciente
                                     </button>
+                                    </div>
                                 </td>
-                                <td class="no-border" colspan="4">&nbsp;</td>
                             </tr>
                         </tbody>
                     </table>
                 </template>
                 <div id="toast" class="animate__animated animate__faster">
                     <!-- Exibir mensagem de erro -->
-                </div>
-                <div id="detalhe">
-                    <div id="info" class="animate__animated animate__faster">
-                        <div id="close">
-                            <a onclick="hideDetail()">
-                                <i class="material-symbols-outlined"> close </i>
-                            </a>
-                        </div>
-
-                        <section></section>
-
-                        <template id="detalhe-template">
-
-                            {{#data}}
-
-                            <h3 class="u-case">{{nome}}</h3>
-                            <ul>
-
-                                <li>
-                                    <label>RG</label>
-                                    <div class="u-case">{{rg}}</div>
-                                </li>
-
-                                <li>
-                                    <label>CPF</label>
-                                    <div>{{cpf}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Data de Nascimento</label>
-                                    <div>{{dt_nasc}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Sexo</label>
-                                    <div class="fl-case">{{sexo}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Peso</label>
-                                    <div>{{peso}} kg</div>
-                                </li>
-
-                                <li>
-                                    <label>altura</label>
-                                    <div>{{altura}} cm</div>
-                                </li>
-
-                                <li>
-                                    <label>Tipo sanguíneo</label>
-                                    <div class="u-case">{{tp_sanguineio}}</div>
-                                </li>
-
-
-                                <li>
-                                    <label>E-mail</label>
-                                    <div class="l-case">{{email}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Telefone</label>
-                                    <div>{{telefone}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Situação</label>
-                                    <div class="fl-case l-case">{{status}}</div>
-                                </li>
-
-                                <li class="endereco">
-                                    <label>Endereço</label>
-                                    <div class="u-case">{{logradouro}}</div>
-                                    <div class="u-case">{{cidade}} - {{uf}}</div>
-                                    <div>{{cep}}</div>
-                                </li>
-
-                            </ul>
-
-                            {{/data}}
-
-                        </template>
-                    </div>
                 </div>
             </div>
         </div>

@@ -66,7 +66,7 @@ def tbl_create():
                 sexo varchar(15),
                 peso integer,
                 altura integer,
-                tp_sanguineio varchar(3),
+                tp_sanguineo varchar(3),
                 uf varchar(2),
                 cidade varchar(50),
                 cep varchar(9),

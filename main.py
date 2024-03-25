@@ -9,8 +9,6 @@ import time
 
 import db
 import db_init
-import static.fragments.html_add as add
-import static.fragments.html_edit as edit
 
 ERR_MSG = "Todos os campos precisam ser preenchidos!"
 
@@ -47,7 +45,7 @@ async def root():
 
 @app.get("/api/pacientes")
 async def pacientes():
-    time.sleep(2)
+    # time.sleep(2)
     return db.get_pacientes()
 
 
@@ -59,7 +57,7 @@ async def pacientes(id: int):
 
 @app.put("/api/pacientes/{id}", response_class=JSONResponse)
 async def update_paciente(id: int, body=Depends(get_body)):
-    if is_valid(body, 4):
+    if is_valid(body, 6):
         db.update_paciente(id, body)
         dados = db.get_pacientes()
         return dados
@@ -69,7 +67,7 @@ async def update_paciente(id: int, body=Depends(get_body)):
 
 @app.post("/api/pacientes", response_class=JSONResponse)
 async def add_paciente(body=Depends(get_body)):
-    if is_valid(body, 4):
+    if is_valid(body, 5):
         db.add_paciente(body)
 
         dados = db.get_pacientes()
@@ -89,7 +87,7 @@ async def paciente(id: int):
 
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos():
-    time.sleep(2)
+    # time.sleep(2)
     return db.get_medicos()
 
 
@@ -101,7 +99,7 @@ async def medicos(id: int):
 
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
 async def update_medico(id: int, body=Depends(get_body)):
-    if is_valid(body, 6):
+    if is_valid(body, 9):
         db.update_medico(id, body)
         dados = db.get_medicos()
         return dados
@@ -111,7 +109,7 @@ async def update_medico(id: int, body=Depends(get_body)):
 
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
-    if is_valid(body, 6):
+    if is_valid(body, 8):
         db.add_medico(body)
         dados = db.get_medicos()
         return dados
@@ -124,42 +122,66 @@ async def medico(id: int):
     db.del_medico(id)
     return ""
 
+# ----------------------------- #
+#    Retornar fragmentos HTML   #
+# ----------------------------- #
+
 
 # reotornar template para adicionar paciente:
-@app.get("/api/pacientes/0/add", response_class=HTMLResponse)
+@app.get("/html/pacientes/new/add", response_class=HTMLResponse)
 async def add_paciente():
-    return add.paciente_html()
-
-
-# reotornar template para adicionar médico:
-@app.get("/api/medicos/0/add", response_class=HTMLResponse)
-async def add_medico():
-    return add.medico_html()
-
+    html = fragment("paciente_add")
+    return html
 
 # retornar template para editar paciente:
-@app.get("/api/pacientes/{id}/edit", response_class=HTMLResponse)
+@app.get("/html/pacientes/{id}/edit", response_class=HTMLResponse)
 async def edit_paciente(id: int):
-    paciente = db.get_paciente(id)
+    dados = db.get_paciente(id)
+    return fragment_format(dados, "paciente_edit")
 
-    if paciente:
-        dados = paciente[0]
-        return edit.paciente_html(dados)
-    else:
-        raise HTTPException(status_code=404)
+# reotornar template para detalhar paciente:
+@app.get("/html/pacientes/{id}/detalhe", response_class=HTMLResponse)
+async def detalhe_paciente(id: int):
+    dados = db.get_paciente(id)
+    return fragment_format(dados, "paciente_detalhe")
 
+# reotornar template para adicionar médico:
+@app.get("/html/medicos/new/add", response_class=HTMLResponse)
+async def add_medico():
+    html = fragment("medico_add")
+    return html
 
-@app.get("/api/medicos/{id}/edit", response_class=HTMLResponse)
+# reotornar template para editar médico:
+@app.get("/html/medicos/{id}/edit", response_class=HTMLResponse)
 async def edit_medico(id: int):
-    medico = db.get_medico(id)
+    dados = db.get_medico(id)
+    return fragment_format(dados, "medico_edit")
 
-    if medico:
-        dados = medico[0]
-        return edit.medico_html(dados)
+# reotornar template para detalhar médico:
+@app.get("/html/medicos/{id}/detalhe", response_class=HTMLResponse)
+async def detalhe_medico(id: int):
+    dados = db.get_medico(id)
+    return fragment_format(dados, "medico_detalhe")
+
+# Ler o arquivo com o fragmento e retornar uma string:
+def fragment(arq_name):
+    html = open(f"./static/fragments/{arq_name}.html", "r").readlines()
+    return "".join(html)
+
+# Devolver a string html preenchida com os valores fornecidos:
+def fragment_format(dados, arq_name):
+    if dados:
+        html = fragment(arq_name)
+        html = html.format(**dados[0])
+        return html
     else:
         raise HTTPException(status_code=404)
 
-
+# --------------------------------------- #
+# Funções auxiliares e endpoints de teste #
+# --------------------------------------- #
+    
+    
 # resetar o banco de dados:
 @app.get("/reset", response_class=RedirectResponse)
 def db_reset():

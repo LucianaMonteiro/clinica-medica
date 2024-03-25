@@ -30,7 +30,7 @@
                 <div class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
                     mustache-array-template="medicos">
                     <!-- Chamada da API - Dados vão ser exibidos aqui! -->
-                    <div class="spinner">
+                    <div class="center">
                         <img width="120px" src="./icons/spinner.svg" alt="">
                     </div>
                 </div>
@@ -59,13 +59,13 @@
                                 <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                                 <td class="icon">
                                     <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                        <a title="Detalhar informações do médico" hx-get="/api/medicos/{{id}}"
-                                            hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
+                                        <a title="Detalhar informações do médico" hx-trigger="click" hx-get="/html/medicos/{{id}}/detalhe"
+                                            hx-target="closest table" hx-swap="outerHTML">
                                             <i class="material-symbols-outlined"> clinical_notes </i>
                                         </a>
                                         <a title="Editar dados do médico" hx-target="closest table"
-                                            hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
-                                            onclick="onClick(this)">
+                                            hx-get="/html/medicos/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
+                                            onclick="allowsEditing(this)">
                                             <i class="material-symbols-outlined"> edit </i>
                                         </a>
 
@@ -85,13 +85,14 @@
                             <!-- {{/data}} -->
 
                             <tr>
-                                <td class="no-border">
-                                    <button class="alone" hx-trigger="click" hx-get="/api/medicos/0/add"
+                                <td>
+                                    <div class="buttons">
+                                        <button class="alone" hx-trigger="click" hx-get="/html/medicos/new/add"
                                         hx-target="closest table" hx-swap="outerHTML">
                                         Cadastrar Médico
                                     </button>
+                                    </div>
                                 </td>
-                                <td class="no-border" colspan="4">&nbsp;</td>
                         </tbody>
                     </table>
                 </template>
@@ -99,88 +100,6 @@
                     <!-- Exibir mensagem de erro -->
                 </div>
 
-                <div id="detalhe">
-                    <div id="info" class="animate__animated animate__faster">
-                        <div id="close">
-                            <a onclick="hideDetail()">
-                                <i class="material-symbols-outlined"> close </i>
-                            </a>
-                        </div>
-
-                        <section></section>
-
-                        <template id="detalhe-template">
-
-                            {{#data}}
-
-                            <h3 class="u-case">{{nome}}</h3>
-                            <ul>
-
-                                <li>
-                                    <label>RG</label>
-                                    <div class="u-case">{{rg}}</div>
-                                </li>
-
-                                <li>
-                                    <label>CPF</label>
-                                    <div>{{cpf}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Data de Nascimento</label>
-                                    <div>{{dt_nasc}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Sexo</label>
-                                    <div class="fl-case">{{sexo}}</div>
-                                </li>
-
-
-                                <li>
-                                    <label>E-mail</label>
-                                    <div class="l-case">{{email}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Telefone</label>
-                                    <div>{{telefone}}</div>
-                                </li>
-
-                                <li>
-                                    <label>CRM</label>
-                                    <div class="u-case">{{crm}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Especialidade</label>
-                                    <div class="fl-case l-case">{{especialidade}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Turno</label>
-                                    <div class="fl-case l-case">{{turno}}</div>
-                                </li>
-
-                                <li>
-                                    <label>Situação</label>
-                                    <div class="fl-case l-case">{{status}}</div>
-                                </li>
-
-                                <li class="endereco">
-                                    <label>Endereço</label>
-                                    <div class="u-case">{{logradouro}}</div>
-                                    <div class="u-case">{{cidade}} - {{uf}}</div>
-                                    <div>{{cep}}</div>
-                                </li>
-
-                            </ul>
-
-                            {{/data}}
-
-                        </template>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
