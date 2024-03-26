@@ -99,7 +99,7 @@ async def medicos(id: int):
 
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
 async def update_medico(id: int, body=Depends(get_body)):
-    if is_valid(body, 9):
+    if is_valid(body, 11):
         db.update_medico(id, body)
         dados = db.get_medicos()
         return dados
@@ -109,7 +109,7 @@ async def update_medico(id: int, body=Depends(get_body)):
 
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
-    if is_valid(body, 8):
+    if is_valid(body, 11):
         db.add_medico(body)
         dados = db.get_medicos()
         return dados

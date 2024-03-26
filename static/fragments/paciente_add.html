@@ -15,7 +15,14 @@
                     <td><input placeholder="RG" name="rg" value=""></td>
                     <td><input placeholder="Telefone" onkeyup="phoneMask(this)" name="telefone" value="">
                     <td><input placeholder="Data de nascimento" name="dt_nasc" value=""></td>
-                    <td><input placeholder="Sexo" name="sexo" value=""></td>
+                    <td>
+                        <select name="Sexo" required>
+                            <option value="" selected hidden>Selecione o Sexo</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </td>
                     <td><input placeholder="Peso" name="peso" value=""></td>
                     <td><input placeholder="Altura" name="altura" value=""></td>
                     <td><input placeholder="Tipo sanguíneo" name="tp_sanguineo" value=""></td>
