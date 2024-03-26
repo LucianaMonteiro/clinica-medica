@@ -11,14 +11,21 @@
             <table class="form">
                 <tr trigger="cancel" class="editing">
                     <td data-th="Nome"><input name="nome" value="{nome}"></td>
-                    <td data-th="Especialidade"><input name="especialidade" value="{especialidade}"></td>
+                    <td data-th="Especialidade">
+                        <select id="especialidade" name="especialidade" required>
+                            <option value="" selected hidden>Selecione a especialidade</option>
+                            <option value="psicologo">Psicólogo</option>
+                            <option value="psiquiatra">Psiquiatra</option>
+                            <option value="psicanalista">Psicanalista</option>
+                        </select>
+                    </td>
                     <td data-th="Telefone"><input name="telefone" value="{telefone}"></td>
                     <td data-th="CRM"><input name="crm" value="{crm}"></td>
                     <td data-th="RG"><input name="rg" value="{rg}"></td>
                     <td data-th="CPF"><input name="cpf" value="{cpf}"></td>
                     <td data-th="Data nascimento"><input name="dt_nasc" value="{dt_nasc}"></td>
                     <td data-th="Sexo">
-                        <select name="Sexo" required>
+                        <select id="sexo" name="sexo" required>
                             <option value="" selected hidden>Selecione o Sexo</option>
                             <option value="masculino">Masculino</option>
                             <option value="feminino">Feminino</option>
@@ -41,6 +48,7 @@
                         </select>
                     </td>
 
+                    <script>defaultOption('especialidade', '{especialidade}')</script>
                     <script>defaultOption('sexo', '{sexo}')</script>
                     <script>defaultOption('turno', '{turno}')</script>
                     <script>defaultOption('status', '{status}')</script>

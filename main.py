@@ -75,6 +75,11 @@ async def add_paciente(body=Depends(get_body)):
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
 
+@app.post("/api/pacientes/search", response_class=JSONResponse)
+async def get_pacientes(body=Depends(get_body)):
+    busca = body["search"]
+    dados = db.get_pacientes() if len(busca) < 2 else db.search_pacientes(busca)
+    return dados
 
 @app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
 async def paciente(id: int):
@@ -115,6 +120,12 @@ async def add_medico(body=Depends(get_body)):
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
+    
+@app.post("/api/medicos/search", response_class=JSONResponse)
+async def get_medicos(body=Depends(get_body)):
+    search = body["search"]
+    dados = db.get_medicos() if len(search) < 2 else db.search_medicos(search)
+    return dados
 
 
 @app.delete("/api/medicos/{id}", response_class=HTMLResponse)
@@ -165,7 +176,7 @@ async def detalhe_medico(id: int):
 
 # Ler o arquivo com o fragmento e retornar uma string:
 def fragment(arq_name):
-    html = open(f"./static/fragments/{arq_name}.html", "r").readlines()
+    html = open(f"./static/fragments/{arq_name}.html", "r", encoding='utf-8').readlines()
     return "".join(html)
 
 # Devolver a string html preenchida com os valores fornecidos:

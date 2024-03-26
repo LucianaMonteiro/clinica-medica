@@ -15,6 +15,7 @@ label.search:before {
 }
 
 input[type=search] {
+    width: 50vw;
     margin-left: 80px;
     padding-left: 43px;
     font-size: 1.2em;
@@ -31,8 +32,9 @@ input[type=search] {
     }
 
     input[type=search] {
-        width: 100%;
+        width: 90vw;
         margin-left: 0px;
         padding-left: 43px;
+        font-size: .8em;
     }
 }

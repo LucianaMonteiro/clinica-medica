@@ -25,11 +25,23 @@
                     </td>
                     <td><input placeholder="Peso" name="peso" value=""></td>
                     <td><input placeholder="Altura" name="altura" value=""></td>
-                    <td><input placeholder="Tipo sanguíneo" name="tp_sanguineo" value=""></td>
+                    <td>
+                        <select name="tp_sanguineo" required>
+                            <option value="" selected hidden>Selecione o tipo sanguíneo</option>
+                            <option value="a+">A+</option>
+                            <option value="b+">B+</option>
+                            <option value="ab+">AB+</option>
+                            <option value="o+">O+</option>
+                            <option value="a-">A-</option>
+                            <option value="b-">B-</option>
+                            <option value="ab-">AB-</option>
+                            <option value="o-">O-</option>
+                        </select>
+                    </td>
                     <td><input placeholder="E-mail" name="email" value=""></td>
                     <td>
                         <select name="status" required>
-                            <option value="" selected hidden>Selecione</option>
+                            <option value="" selected hidden>Selecione a situação</option>
                             <option value="agendada">Agendada</option>
                             <option value="cancelada">Cancelada</option>
                             <option value="concluída">Concluída</option>

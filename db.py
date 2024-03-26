@@ -14,10 +14,10 @@ def get_paciente(id):
 
 def add_paciente(new_paciente: dict):
     fields = {
-        "logradouro":"Rua 12 Norte, lote 6",
+        "logradouro": "Rua 12 Norte, lote 6",
         "cep": "71909-540",
-        "cidade":"Brasília",
-        "uf":"DF"
+        "cidade": "Brasília",
+        "uf": "DF",
     }
     new_paciente.update(fields)
 
@@ -68,6 +68,26 @@ def get_dados(tbl, id=None):
     return dados
 
 
+def search_medicos(param):
+    return search("medicos", param)
+
+
+def search_pacientes(param):
+    return search("pacientes", param)
+
+
+def search(tbl, param):
+
+    sql = f"SELECT * FROM {tbl}"
+    sql += f" WHERE UPPER(nome) LIKE '%{param.upper()}%'"
+    sql += f" OR cpf LIKE '{param}%'"
+    sql += " ORDER BY 2"
+    cur.execute(sql)
+    rows = cur.fetchall()
+    dados = [dict(row) for row in rows]
+    return dados
+
+
 def add(table, dados: dict):
     if dados:
         values = [f"'{v}'" for _, v in dados.items()]
@@ -81,7 +101,7 @@ def add(table, dados: dict):
                 f"INSERT INTO {table} (id, {all_fields}) values (DEFAULT, {all_values})"
             )
         else:
-            f"INSERT INTO {table} (id, {all_fields}) values (NULL, {all_values})"
+            sql = f"INSERT INTO {table} (id, {all_fields}) values (NULL, {all_values})"
 
         cur.execute(sql)
         con.commit()
