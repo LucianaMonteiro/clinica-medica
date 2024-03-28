@@ -103,19 +103,23 @@ body {
 }
 
 .w-100 {
-    width: 100%;
+    width: 100% !important;
 }
 
 .w-1 {
-    width: 8.5%;
+    width: 8.5% !important;
 }
 
 .w-2 {
-    width: 17%;
+    width: 17% !important;
+}
+
+.w-3 {
+    width: 25.5% !important;
 }
 
 .w-5 {
-    width: 50%;
+    width: 50% !important;
 }
 
 .u-case {
@@ -480,6 +484,7 @@ th {
 
     .w-1,
     .w-2,
+    .w-3,
     .w-5,
     .w-100 {
         width: 100%;

@@ -37,8 +37,8 @@
                 <img id="spinner" class="htmx-indicator" width="80px" src="./icons/spinner.svg" />
             </div>
 
-            <div id="lista_medicos" class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
-                mustache-array-template="medicos-template">
+            <div id="lista_medicos" class="w-100" hx-get="/api/medicos" hx-vars="{'page':0}" hx-trigger="load"
+                hx-swap="innerHTML" mustache-array-template="medicos-template">
                 <!-- Chamada da API - Dados vão ser exibidos aqui! -->
                 <!-- <div class="center">
                     <img width="120px" src="./icons/spinner.svg" alt="">
@@ -59,7 +59,7 @@
                         </tr>
                     </thead>
                     <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
-                        <!-- {{#data}} -->
+                        <!-- {{#data.info}} -->
                         <tr>
                             <td title="{{id}}" class="u-case">{{nome}}</td>
                             <td data-th="CRM">{{crm}}</td>
@@ -86,18 +86,45 @@
                                     </a>
                                 </div>
                         </tr>
-                        <!-- {{/data}} -->
+                        <!-- {{/data.info}} -->
 
-                        <!-- {{^data}} -->
+                        <!-- {{^data.info}} -->
                         <tr>
                             <td class="warning" colspan="8">Não há médicos cadastrados!</td>
                         </tr>
-                        <!-- {{/data}} -->
+                        <!-- {{/data.info}} -->
 
                         <tr>
-                            <td>
-                                <div class="buttons">
-                                    <button class="alone" hx-trigger="click" hx-get="/html/medicos/new/add"
+                            <td colspan="7">
+                                <div class="pagination">
+                                    <div class="nav-buttons">
+                                        <!-- {{#data.pagination}} -->
+                                        <a hx-get="/api/medicos" hx-vars="{'page':0}" hx-target="#lista_medicos"
+                                            hx-swap="innerHTML" mustache-array-template="medicos-template">
+                                            <i class="material-symbols-outlined small-icon"> first_page </i>
+                                        </a>
+
+                                        <a class="{{data.pagination.alias_first_page}}" hx-get="/api/medicos" hx-vars="{'page':{{data.pagination.previous_page}}}"
+                                            hx-target="#lista_medicos" hx-swap="innerHTML"
+                                            mustache-array-template="medicos-template">
+                                            <i class="material-symbols-outlined small-icon {{data.pagination.alias_first_page}}"> chevron_left </i>
+                                        </a>
+
+                                        <a class="{{data.pagination.alias_last_page}}" hx-get="/api/medicos" hx-vars="{'page':{{data.pagination.next_page}}}"
+                                            hx-target="#lista_medicos" hx-swap="innerHTML"
+                                            mustache-array-template="medicos-template">
+                                            <i class="material-symbols-outlined small-icon {{data.pagination.alias_last_page}}"> chevron_right </i>
+                                        </a>
+
+                                        <a hx-get="/api/medicos" hx-vars="{'page':{{data.pagination.total_pages}}}"
+                                            hx-target="#lista_medicos" hx-swap="innerHTML"
+                                            mustache-array-template="medicos-template">
+                                            <i class="material-symbols-outlined small-icon"> last_page </i>
+                                        </a>
+                                        <!-- {{/data.pagination}} -->
+                                    </div>
+
+                                    <button class="w-3" hx-trigger="click" hx-get="/html/medicos/new/add"
                                         hx-target="closest table" hx-swap="outerHTML">
                                         Cadastrar Médico
                                     </button>
