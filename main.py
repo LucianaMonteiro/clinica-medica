@@ -125,7 +125,7 @@ async def medicos(id: int):
 
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
 async def update_medico(id: int, body=Depends(get_body)):
-    if is_valid(body, 11):
+    if is_valid(body, 15):
         db.update_medico(id, body)
         nome = body["nome"]
         dados = db.get_medicos_position(nome, LEN_PAGE)
@@ -136,7 +136,7 @@ async def update_medico(id: int, body=Depends(get_body)):
 
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
-    if is_valid(body, 11):
+    if is_valid(body, 15):
         nome = body["nome"]
         db.add_medico(body)
         dados = db.get_medicos_position(nome, LEN_PAGE)
@@ -147,8 +147,14 @@ async def add_medico(body=Depends(get_body)):
 
 @app.post("/api/medicos/search", response_class=JSONResponse)
 async def get_medicos(body=Depends(get_body)):
-    search = body["search"]
-    dados = db.get_medicos() if len(search) < 2 else db.search_medicos(search)
+    key = "search"
+    search = body[key] if key in body else ""
+
+    if len(search) > 1:
+        dados = db.search_medicos(search)
+    else:
+        dados = db.get_medicos_paged(LEN_PAGE)
+        
     return dados
 
 

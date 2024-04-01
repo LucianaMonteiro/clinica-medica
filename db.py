@@ -77,7 +77,7 @@ def del_medico(id):
 def get_dados(tbl, id=None):
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE id={id}" if id else ""
-    sql += " ORDER BY 2"
+    sql += " ORDER BY nome"
     cur.execute(sql)
     rows = cur.fetchall()
     dados = [dict(row) for row in rows]
@@ -85,7 +85,7 @@ def get_dados(tbl, id=None):
 
 
 def get_dados_paged(tbl, len_page=0, page=-1):
-    sql = f"SELECT * FROM {tbl} ORDER BY 2"
+    sql = f"SELECT * FROM {tbl} ORDER BY nome"
     sql += f" LIMIT {len_page} OFFSET {page * len_page}" if page >= 0 else ""
     cur.execute(sql)
     rows = cur.fetchall()
@@ -94,7 +94,10 @@ def get_dados_paged(tbl, len_page=0, page=-1):
 
 
 def search_medicos(param):
-    return search(TBL_MEDICOS, param)
+    dados = search(TBL_MEDICOS, param)
+    dados.update(pagination(TBL_MEDICOS))
+    return dados
+    
 
 
 def search_pacientes(param):
@@ -106,11 +109,11 @@ def search(tbl, param):
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE UPPER(nome) LIKE '%{param.upper()}%'"
     sql += f" OR cpf LIKE '{param}%'"
-    sql += " ORDER BY 2"
+    sql += " ORDER BY nome"
     cur.execute(sql)
     rows = cur.fetchall()
     dados = [dict(row) for row in rows]
-    return dados
+    return dict({"info": dados})
 
 
 def add(table, dados: dict):
