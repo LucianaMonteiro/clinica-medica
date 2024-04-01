@@ -1,8 +1,8 @@
-<div id="editar" class="show background">
+<div id="dialog" class="show background">
     <div class="info animate__animated animate__faster animate__fadeInUp">
         <div class="close">
             <h3> Editar Cadastro do Médico </h3>
-            <a onclick="closeDialog('editar')" hx-get="/api/medicos" hx-swap="outerHTML" hx-target="#editar">
+            <a onclick="closeDialog('dialog')">
                 <i class="material-symbols-outlined">close</i>
             </a>
         </div>
@@ -56,12 +56,12 @@
             </table>
         </section>
         <div class="buttons">
-            <a class="button secondary" hx-get="/api/medicos" title="Cancelar a alteração" hx-swap="outerHTML"
-                hx-target="#editar">
+            <a class="button secondary" onclick="closeDialog('dialog')">
                 Cancelar
             </a>
-            <a class="button" hx-trigger="click" hx-include="#editar" hx-put="/api/medicos/{id}" title="Salvar"
-                hx-target="#editar" hx-swap="outerHTML">
+            <a class="button" onclick="closeDialog('dialog')" hx-trigger="click" hx-include="#dialog"
+                hx-put="/api/medicos/{id}" hx-target="#slot_lista" hx-swap="innerHTML"
+                mustache-array-template="medicos-template">
                 Salvar
             </a>
         </div>

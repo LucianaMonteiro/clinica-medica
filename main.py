@@ -88,11 +88,13 @@ async def add_paciente(body=Depends(get_body)):
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
 
+
 @app.post("/api/pacientes/search", response_class=JSONResponse)
 async def get_pacientes(body=Depends(get_body)):
     busca = body["search"]
     dados = db.get_pacientes() if len(busca) < 2 else db.search_pacientes(busca)
     return dados
+
 
 @app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
 async def paciente(id: int):
@@ -106,10 +108,10 @@ async def paciente(id: int):
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos(params=Depends(get_params)):
     if params:
-        page = int(params["page"])
+        key = "page"
+        page = int(params[key]) if key in params else 0
         page = 0 if page < 0 else page
         dados = db.get_medicos_paged(LEN_PAGE, page)
-        dados.update(pagination("medicos", page))
         return dados
     else:
         return db.get_medicos()
@@ -125,7 +127,8 @@ async def medicos(id: int):
 async def update_medico(id: int, body=Depends(get_body)):
     if is_valid(body, 11):
         db.update_medico(id, body)
-        dados = db.get_medicos()
+        nome = body["nome"]
+        dados = db.get_medicos_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
@@ -134,12 +137,14 @@ async def update_medico(id: int, body=Depends(get_body)):
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
     if is_valid(body, 11):
+        nome = body["nome"]
         db.add_medico(body)
-        dados = db.get_medicos()
+        dados = db.get_medicos_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
-    
+
+
 @app.post("/api/medicos/search", response_class=JSONResponse)
 async def get_medicos(body=Depends(get_body)):
     search = body["search"]
@@ -152,6 +157,7 @@ async def medico(id: int):
     db.del_medico(id)
     return ""
 
+
 # ----------------------------- #
 #    Retornar fragmentos HTML   #
 # ----------------------------- #
@@ -163,11 +169,13 @@ async def add_paciente():
     html = fragment("paciente_add")
     return html
 
+
 # retornar template para editar paciente:
 @app.get("/html/pacientes/{id}/edit", response_class=HTMLResponse)
 async def edit_paciente(id: int):
     dados = db.get_paciente(id)
     return fragment_format(dados, "paciente_edit")
+
 
 # reotornar template para detalhar paciente:
 @app.get("/html/pacientes/{id}/detalhe", response_class=HTMLResponse)
@@ -175,11 +183,13 @@ async def detalhe_paciente(id: int):
     dados = db.get_paciente(id)
     return fragment_format(dados, "paciente_detalhe")
 
+
 # reotornar template para adicionar médico:
 @app.get("/html/medicos/new/add", response_class=HTMLResponse)
 async def add_medico():
     html = fragment("medico_add")
     return html
+
 
 # reotornar template para editar médico:
 @app.get("/html/medicos/{id}/edit", response_class=HTMLResponse)
@@ -187,16 +197,25 @@ async def edit_medico(id: int):
     dados = db.get_medico(id)
     return fragment_format(dados, "medico_edit")
 
+
 # reotornar template para detalhar médico:
 @app.get("/html/medicos/{id}/detalhe", response_class=HTMLResponse)
 async def detalhe_medico(id: int):
     dados = db.get_medico(id)
     return fragment_format(dados, "medico_detalhe")
 
+
+def is_valid(body: dict, qtd: int):
+    return sum([1 if v else 0 for _, v in body.items()]) == qtd
+
+
 # Ler o arquivo com o fragmento e retornar uma string:
 def fragment(arq_name):
-    html = open(f"./static/fragments/{arq_name}.html", "r", encoding='utf-8').readlines()
+    html = open(
+        f"./static/fragments/{arq_name}.html", "r", encoding="utf-8"
+    ).readlines()
     return "".join(html)
+
 
 # Devolver a string html preenchida com os valores fornecidos:
 def fragment_format(dados, arq_name):
@@ -206,38 +225,15 @@ def fragment_format(dados, arq_name):
         return html
     else:
         raise HTTPException(status_code=404)
-    
 
-def pagination(tbl, page=0):
-    total_pages = (db.count(tbl) - 1) // LEN_PAGE
-
-    pages = {}
-
-    if total_pages > 0:
-        pages = {
-            "pagination": {
-                "first_page": page == 0,
-                "alias_first_page": "first_page" if page == 0 else "",
-                "previous_page": page - 1 if page > 1 else 0,
-                "next_page": page + 1 if page < total_pages else page,
-                "alias_last_page": "last_page" if page >= total_pages else "",
-                "last_page": page >= total_pages,
-                "total_pages": total_pages,
-            }
-        }
-    return pages
 
 # --------------------------------------- #
 # Funções auxiliares e endpoints de teste #
 # --------------------------------------- #
-    
-    
+
+
 # resetar o banco de dados:
 @app.get("/reset", response_class=RedirectResponse)
 def db_reset():
     db_init.tables_init()
     return "/app/home.html"
-
-
-def is_valid(body: dict, qtd: int):
-    return sum([1 if v else 0 for _, v in body.items()]) == qtd
