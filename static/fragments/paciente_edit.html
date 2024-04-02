@@ -1,8 +1,8 @@
-<div id="editar" class="show background">
+<div id="dialog" class="show background">
     <div class="info animate__animated animate__faster animate__fadeInUp">
         <div class="close">
             <h3> Editar Cadastro do Paciente </h3>
-            <a onclick="closeDialog('editar')" hx-get="/api/pacientes" hx-swap="outerHTML" hx-target="#editar">
+            <a onclick="closeDialog('dialog')">
                 <i class="material-symbols-outlined">close</i>
             </a>
         </div>
@@ -11,10 +11,10 @@
             <table class="form">
                 <tr trigger="cancel" class="editing">
                     <td data-th="Nome"><input name="nome" value="{nome}"></td>
-                    <td data-th="CPF"><input name="cpf" value="{cpf}"></td>
+                    <td data-th="CPF"><input name="cpf" onkeyup="cpfMask(this)" value="{cpf}"></td>
                     <td data-th="RG"><input name="rg" value="{rg}"></td>
-                    <td data-th="Telefone"><input name="telefone" value="{telefone}"></td>
-                    <td data-th="Data nascimento"><input name="dt_nasc" value="{dt_nasc}"></td>
+                    <td data-th="Telefone"><input name="telefone" onkeyup="phoneMask(this)" value="{telefone}"></td>
+                    <td data-th="Data nascimento"><input name="dt_nasc" onkeyup="dateMask(this)" value="{dt_nasc}"></td>
                     <td data-th="Sexo">
                         <select id="sexo" name="sexo" required>
                             <option value="" selected hidden>Selecione o Sexo</option>
@@ -25,8 +25,24 @@
                     </td>
                     <td data-th="Peso"><input name="peso" value="{peso}"></td>
                     <td data-th="Altura"><input name="altura" value="{altura}"></td>
-                    <td data-th="Tipo sanguíneo"><input name="tp_sanguineo" value="{tp_sanguineo}"></td>
+                    <td data-th="Tipo sanguíneo">
+                        <select id="tp_sanguineo" name="tp_sanguineo" required>
+                            <option value="" selected hidden>Selecione o tipo sanguíneo</option>
+                            <option value="a+">A+</option>
+                            <option value="b+">B+</option>
+                            <option value="ab+">AB+</option>
+                            <option value="o+">O+</option>
+                            <option value="a-">A-</option>
+                            <option value="b-">B-</option>
+                            <option value="ab-">AB-</option>
+                            <option value="o-">O-</option>
+                        </select>
+                    </td>
                     <td data-th="E-mail"><input name="email" value="{email}"></td>
+                    <td data-th="UF"><input name="uf" value="{uf}"></td>
+                    <td data-th="Cidade"><input name="cidade" value="{cidade}"></td>
+                    <td data-th="Endereço"><input name="logradouro" value="{logradouro}"></td>
+                    <td data-th="CEP"><input name="cep" onkeyup="cepMask(this)" value="{cep}"></td>
                     <td data-th="Situação">
                         <select id="status" name="status">
                             <option value="agendada">Agendada</option>
@@ -34,20 +50,20 @@
                             <option value="concluída">Concluída</option>
                         </select>
                     </td>
-                    
+
                     <script>defaultOption('sexo', '{sexo}')</script>
+                    <script>defaultOption('tp_sanguineo', '{tp_sanguineo}')</script>
                     <script>defaultOption('status', '{status}')</script>
 
                 </tr>
             </table>
         </section>
         <div class="buttons">
-            <a class="button secondary" hx-get="/api/pacientes" title="Cancelar a alteração" hx-swap="outerHTML"
-                hx-target="#editar">
+            <a class="button secondary" onclick="closeDialog('dialog')">
                 Cancelar
             </a>
-            <a class="button" hx-trigger="click" hx-include="#editar" hx-put="/api/pacientes/{id}" title="Salvar"
-                hx-target="#editar" hx-swap="outerHTML">
+            <a class="button" hx-trigger="click" hx-include="#dialog" hx-put="/api/pacientes/{id}"
+                hx-target="#slot_lista" hx-swap="innerHTML" mustache-array-template="pacientes-template">
                 Salvar
             </a>
         </div>

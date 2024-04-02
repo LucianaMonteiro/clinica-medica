@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Médica - Pacientes</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/search.css">
 
 </head>
 
@@ -17,85 +19,128 @@
             <i class="material-symbols-outlined">arrow_back</i>
         </a>
     </div>
-    
+
     <div class="container">
         <div class="titles">
-            <h1>Clínica Médica</h1>
+            <h1>Clínica Mentalis</h1>
             <h2>Cadastro de Pacientes</h2>
         </div>
 
-        <div class="content">
-            <div class="dados" hx-ext="client-side-templates">
-                <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
-                    mustache-array-template="paciente-template">
-                    <!-- Chamada da API - Dados vão ser exibidos aqui! -->
-                    <div class="center">
-                        <img width="120px" src="./icons/spinner.svg" alt="">
-                    </div>
-                </div>
+        <div class="content" hx-ext="client-side-templates">
+            <div class="search center">
+                <label class="search">
+                    <input type="search" name="search" placeholder="Informe parte do nome ou do CPF"
+                        hx-post="/api/pacientes/search" hx-trigger="input changed delay:500ms, search"
+                        hx-target="#slot_lista" mustache-array-template="pacientes-template">
+                    <!-- <input required type="date"> -->
+                </label>
+                <img id="spinner" class="htmx-indicator" width="80px" src="./icons/spinner.svg" />
+            </div>
 
-                <template id="paciente-template">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th class="m-hidden">Email</th>
-                                <th class="w-15">Telefone</th>
-                                <th class="w-15">Situação</th>
-                                <th colspan="2">&nbsp;</th>
-                            </tr>
-                        </thead>
+            <div id="slot_lista" class="w-100" hx-get="/api/pacientes" hx-vars="{'page':0}" hx-trigger="load"
+                mustache-array-template="pacientes-template">
+                <!-- Chamada da API - Dados vão ser exibidos aqui! -->
+                <!-- <div class="center">
+                    <img width="120px" src="./icons/spinner.svg" alt="">
+                </div> -->
+            </div>
 
-                        <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
-                            <!-- {{#data}} -->
-                            <tr>
-                                <td title="{{id}}" class="u-case">{{nome}}</td>
-                                <td data-th="Email" class="m-hidden"><span class="l-case">{{email}}</span></td>
-                                <td data-th="Telefone">{{telefone}}</td>
-                                <td data-th="Situação" class="fl-case">{{status}}</td>
-                                <td class="icon">
-                                    <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                        <a title="Detalhar informações do paciente" hx-trigger="click" hx-get="/html/pacientes/{{id}}/detalhe"
-                                            hx-target="closest table" hx-swap="outerHTML">
-                                            <i class="material-symbols-outlined"> clinical_notes </i>
+            <section id="slot_dialogo">
+                <!-- Os diálogos serão exibidos aqui! -->
+            </section>
+
+            <template id="pacientes-template">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th class="m-hidden">Email</th>
+                            <th class="w-15">Telefone</th>
+                            <th class="w-15">Situação</th>
+                            <th colspan="2">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
+                        <!-- {{#data.info}} -->
+                        <tr>
+                            <td title="{{id}}" class="u-case">{{nome}}</td>
+                            <td data-th="Email" class="m-hidden"><span class="l-case">{{email}}</span></td>
+                            <td data-th="Telefone">{{telefone}}</td>
+                            <td data-th="Situação" class="fl-case">{{status}}</td>
+                            <td class="icon">
+                                <div>
+                                    <a title="Detalhar informações do paciente" hx-trigger="click"
+                                        hx-get="/html/pacientes/{{id}}/detalhe" hx-target="#slot_dialogo"
+                                        hx-swap="innerHTML">
+                                        <i class="material-symbols-outlined"> clinical_notes </i>
+                                    </a>
+                                    <a title="Editar dados do paciente" hx-target="#slot_dialogo" hx-swap="innerHTML"
+                                        hx-get="/html/pacientes/{{id}}/edit" hx-trigger="click"
+                                        onclick="allowsEditing(this)" hx-vars="{'page': {{data.this_page}} }">
+                                        <i class="material-symbols-outlined"> edit </i>
+                                    </a>
+                                    <a title="Excluir o registro do paciente" hx-target="closest tr"
+                                        hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
+                                        hx-delete="/api/pacientes/{{id}}">
+                                        <i class="material-symbols-outlined"> delete </i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- {{/data.info}} -->
+
+                        <!-- {{^data.info}} -->
+                        <tr>
+                            <td class="warning" colspan="8">Não há pacientes cadastrados!</td>
+                        </tr>
+                        <!-- {{/data.info}} -->
+
+                        <tr>
+                            <td colspan="7">
+                                <div class="pagination">
+                                    <div class="nav-buttons">
+                                        <!-- {{#data.pagination}} -->
+                                        <a hx-get="/api/pacientes" hx-vars="{'page':0}" hx-target="#slot_lista"
+                                            hx-swap="innerHTML" mustache-array-template="pacientes-template">
+                                            <i class="material-symbols-outlined small-icon"> first_page </i>
                                         </a>
-                                        <a title="Editar dados do paciente" hx-target="closest table"
-                                            hx-get="/html/pacientes/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
-                                            onclick="allowsEditing(this)">
-                                            <i class="material-symbols-outlined"> edit </i>
+
+                                        <a class="{{data.pagination.alias_first_page}}" hx-get="/api/pacientes"
+                                            hx-vars="{'page':{{data.pagination.previous_page}}}" hx-target="#slot_lista"
+                                            hx-swap="innerHTML" mustache-array-template="pacientes-template">
+                                            <i
+                                                class="material-symbols-outlined small-icon {{data.pagination.alias_first_page}}">
+                                                chevron_left </i>
                                         </a>
-                                        <a title="Excluir o registro do paciente" hx-target="closest tr"
-                                            hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
-                                            hx-delete="/api/pacientes/{{id}}">
-                                            <i class="material-symbols-outlined"> delete </i>
+
+                                        <a class="{{data.pagination.alias_last_page}}" hx-get="/api/pacientes"
+                                            hx-vars="{'page':{{data.pagination.next_page}}}" hx-target="#slot_lista"
+                                            hx-swap="innerHTML" mustache-array-template="pacientes-template">
+                                            <i
+                                                class="material-symbols-outlined small-icon {{data.pagination.alias_last_page}}">
+                                                chevron_right </i>
                                         </a>
+
+                                        <a hx-get="/api/pacientes" hx-vars="{'page':{{data.pagination.total_pages}}}"
+                                            hx-target="#slot_lista" hx-swap="innerHTML"
+                                            mustache-array-template="pacientes-template">
+                                            <i class="material-symbols-outlined small-icon"> last_page </i>
+                                        </a>
+                                        <!-- {{/data.pagination}} -->
                                     </div>
-                                </td>
-                            </tr>
-                            <!-- {{/data}} -->
 
-                            <!-- {{^data}} -->
-                            <tr>
-                                <td class="warning" colspan="8">Não há pacientes cadastrados!</td>
-                            </tr>
-                            <!-- {{/data}} -->
-
-                            <tr>
-                                <td>
-                                    <div class="buttons">
-                                        <button class="alone" hx-trigger="click" hx-get="/html/pacientes/new/add"
-                                        hx-target="closest table" hx-swap="outerHTML">
+                                    <button class="w-3" hx-get="/html/pacientes/new/add" hx-trigger="click"
+                                        hx-swap="innerHTML" hx-target="#slot_dialogo">
                                         Cadastrar Paciente
                                     </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </template>
-                <div id="toast" class="animate__animated animate__faster">
-                    <!-- Exibir mensagem de erro -->
-                </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+            <div id="toast" class="animate__animated animate__faster">
+                <!-- Exibir mensagem de erro -->
             </div>
         </div>
     </div>

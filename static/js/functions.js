@@ -25,6 +25,14 @@ document.addEventListener('htmx:responseError', evt => {
     showToast(error.detail);
 })
 
+document.addEventListener('htmx:beforeSwap', evt => {
+    if (evt.detail.xhr.status >= 300) {
+        evt.detail.shouldSwap = false
+        return
+    }
+    closeDialog('dialog')
+})
+
 function defaultOption(id, defaultValue) {
     let select = document.getElementById(id);
     select.value = defaultValue;
@@ -72,8 +80,26 @@ function phoneMask(obj) {
     obj.value = fmt
 }
 
+function crmMask(obj) {
+    mask = "######-##";
+    var fmt = format(obj.value, mask);
+    obj.value = fmt
+}
+
 function cpfMask(obj) {
     mask = "###.###.###-##";
+    var fmt = format(obj.value, mask);
+    obj.value = fmt
+}
+
+function dateMask(obj) {
+    mask = "##-##-####";
+    var fmt = format(obj.value, mask);
+    obj.value = fmt
+}
+
+function cepMask(obj) {
+    mask = "#####-###";
     var fmt = format(obj.value, mask);
     obj.value = fmt
 }

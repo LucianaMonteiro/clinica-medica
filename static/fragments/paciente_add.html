@@ -1,8 +1,8 @@
-<div id="cadastrar" class="show background">
+<div id="dialog" class="show background">
     <div class="info animate__animated animate__faster animate__fadeInUp">
         <div class="close">
             <h3>Cadastrar Paciente</h3>
-            <a onclick="closeDialog('cadastrar')" hx-get="/api/pacientes" hx-swap="outerHTML" hx-target="#cadastrar">
+            <a onclick="closeDialog('dialog')">
                 <i class="material-symbols-outlined">close</i>
             </a>
         </div>
@@ -14,7 +14,7 @@
                     <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
                     <td><input placeholder="RG" name="rg" value=""></td>
                     <td><input placeholder="Telefone" onkeyup="phoneMask(this)" name="telefone" value="">
-                    <td><input placeholder="Data de nascimento" name="dt_nasc" value=""></td>
+                        <td><input placeholder="Data de nascimento" onkeyup="dateMask(this)" name="dt_nasc" value=""></td>
                     <td>
                         <select name="Sexo" required>
                             <option value="" selected hidden>Selecione o Sexo</option>
@@ -39,6 +39,10 @@
                         </select>
                     </td>
                     <td><input placeholder="E-mail" name="email" value=""></td>
+                    <td><input placeholder="UF" name="uf" value=""></td>
+                    <td><input placeholder="Cidade" name="cidade" value=""></td>
+                    <td><input placeholder="Endereço" name="logradouro" value=""></td>
+                    <td><input placeholder="CEP" onkeyup="cepMask(this)" name="cep" value=""></td>
                     <td>
                         <select name="status" required>
                             <option value="" selected hidden>Selecione a situação</option>
@@ -52,13 +56,13 @@
         </section>
 
         <div class="buttons">
-            <a class="button secondary" hx-get="/api/pacientes" title="Cancelar a alteração" hx-swap="outerHTML"
-                hx-target="#cadastrar">
+            <a class="button secondary" onclick="closeDialog('dialog')">
                 Cancelar
             </a>
 
-            <a class="button" hx-trigger="click" hx-include="#cadastrar" hx-post="/api/pacientes" title="Salvar"
-                hx-target="#cadastrar" hx-swap="outerHTML">
+            <a class="button" hx-trigger="click" hx-include="#dialog"
+            hx-post="/api/pacientes" hx-target="#slot_lista" hx-swap="innerHTML"
+            mustache-array-template="pacientes-template">
                 Salvar
             </a>
         </div>

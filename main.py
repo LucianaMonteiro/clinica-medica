@@ -56,10 +56,16 @@ async def root():
 # PACIENTES:
 
 
-@app.get("/api/pacientes")
-async def pacientes():
-    # time.sleep(2)
-    return db.get_pacientes()
+@app.get("/api/pacientes", response_class=JSONResponse)
+async def pacientes(params=Depends(get_params)):
+    if params:
+        key = "page"
+        page = int(params[key]) if key in params else 0
+        page = 0 if page < 0 else page
+        dados = db.get_pacientes_paged(LEN_PAGE, page)
+        return dados
+    else:
+        return db.get_pacientes()
 
 
 @app.get("/api/pacientes/{id}")
@@ -70,9 +76,10 @@ async def pacientes(id: int):
 
 @app.put("/api/pacientes/{id}", response_class=JSONResponse)
 async def update_paciente(id: int, body=Depends(get_body)):
-    if is_valid(body, 11):
+    if is_valid(body, 15):
         db.update_paciente(id, body)
-        dados = db.get_pacientes()
+        nome = body["nome"]
+        dados = db.get_pacientes_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
@@ -80,10 +87,10 @@ async def update_paciente(id: int, body=Depends(get_body)):
 
 @app.post("/api/pacientes", response_class=JSONResponse)
 async def add_paciente(body=Depends(get_body)):
-    if is_valid(body, 11):
+    if is_valid(body, 15):
+        nome = body["nome"]
         db.add_paciente(body)
-
-        dados = db.get_pacientes()
+        dados = db.get_pacientes_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
@@ -91,8 +98,14 @@ async def add_paciente(body=Depends(get_body)):
 
 @app.post("/api/pacientes/search", response_class=JSONResponse)
 async def get_pacientes(body=Depends(get_body)):
-    busca = body["search"]
-    dados = db.get_pacientes() if len(busca) < 2 else db.search_pacientes(busca)
+    key = "search"
+    search = body[key] if key in body else ""
+
+    if len(search) > 1:
+        dados = db.search_pacientes(search)
+    else:
+        dados = db.get_pacientes_paged(LEN_PAGE)
+
     return dados
 
 
@@ -154,7 +167,7 @@ async def get_medicos(body=Depends(get_body)):
         dados = db.search_medicos(search)
     else:
         dados = db.get_medicos_paged(LEN_PAGE)
-        
+
     return dados
 
 
