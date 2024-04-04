@@ -33,11 +33,6 @@ document.addEventListener('htmx:beforeSwap', evt => {
     closeDialog('dialog')
 })
 
-function defaultOption(id, defaultValue) {
-    let select = document.getElementById(id);
-    select.value = defaultValue;
-}
-
 function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.innerHTML = msg;
@@ -130,25 +125,89 @@ function menuToggle() {
     document.querySelector('.close-icon').classList.toggle('toggle');
 }
 
-function getCidades(uf) {
+function getTiposSangue() {
+    const elm = document.getElementById('tp_sanguineo');
+
+    const tipos = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+
+    for (const i in tipos) {
+        var opt = document.createElement('option');
+        opt.value = tipos[i];
+        opt.innerHTML = tipos[i];
+        elm.appendChild(opt);
+    }
+}
+
+function getEstados() {
+    const elm = document.getElementById('uf');
+
+    const estados = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF',
+        'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB',
+        'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR',
+        'SC', 'SP', 'SE', 'TO']
+
+    for (const i in estados) {
+        var opt = document.createElement('option');
+        opt.value = estados[i];
+        opt.innerHTML = estados[i];
+        elm.appendChild(opt);
+    }
+}
+
+function selCidades(uf, default_value) {
     if (uf == "") return;
 
-    var url = 'https://brasilapi.com.br/api/ibge/municipios/v1/'
-    url += uf.toLowerCase()
+    const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`;
+    const sel = document.getElementById('cidade');
 
-    sel = document.getElementById('cidade');
     sel.innerHTML = "";
+
+    fetch(url,)
+        .then(response => response.json())
+        .then(data => {
+            for (const [_, v] of data.entries()) {
+                var opt = document.createElement('option');
+                opt.value = v.nome;
+                opt.innerHTML = v.nome;
+                sel.appendChild(opt);
+            }
+
+            if (default_value) {
+                defaultOption('cidade', default_value);
+            }
+        })
+        .catch((error) => {
+            console.error('Não foi possível obter as cidades: ', error)
+        });
+}
+
+function getAddress(cep) {
+    if (cep == "") return;
+
+    cep = cep.split('-').join('')
+
+    const url = `https://brasilapi.com.br/api/cep/v1/${cep}`
+
+    getEstados()
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            for (const [k, v] of data.entries()) {
-                var opt = document.createElement('option');
-                opt.value = v.nome;
-                opt.innerHTML = v['nome'];
-                sel.appendChild(opt);
-            }
-        }).catch((error) => {
-            console.error('Não foi possível obter as cidades: ', error)
+            const cidade = data.city
+            const uf = data.state
+
+            defaultOption('uf', uf);
+            selCidades(uf, cidade)
+
+            const endereco = document.getElementById('logradouro');
+            endereco.value = `${data.street}, ${data.neighborhood}`;
+        })
+        .catch((error) => {
+            console.error('CEP não localizado: ', error);
         });
+}
+
+function defaultOption(id, defaultValue) {
+    let select = document.getElementById(id);
+    select.value = defaultValue;
 }

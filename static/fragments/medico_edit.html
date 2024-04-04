@@ -33,10 +33,24 @@
                         </select>
                     </td>
                     <td data-th="E-mail"><input name="email" value="{email}"></td>
-                    <td data-th="UF"><input name="uf" value="{uf}"></td>
-                    <td data-th="Cidade"><input name="cidade" value="{cidade}"></td>
-                    <td data-th="Endereço"><input name="logradouro" value="{logradouro}"></td>
-                    <td data-th="CEP"><input name="cep" onkeyup="cepMask(this)" value="{cep}"></td>
+                    <td data-th="CEP">
+                        <input name="cep" onkeyup="cepMask(this)" onblur="getAddress(value)" value="{cep}">
+                    </td>
+
+                    <td data-th="Endereço">
+                        <input id="logradouro" name="logradouro" value="{logradouro}">
+                    </td>
+
+                    <td data-th="UF">
+                        <select id="uf" name="uf" onchange="selCidades(value)">
+                        </select>
+                    </td>
+
+                    <td data-th="Cidade">
+                        <select id="cidade" name="cidade" onmousedown="this.size=5" onchange="this.size=0"
+                            onblur="this.size=0">
+                        </select>
+                    </td>
                     <td data-th="Turno">
                         <select id="turno" name="turno">
                             <option value="diurno">Diurno</option>
@@ -56,6 +70,10 @@
                     <script>defaultOption('sexo', '{sexo}')</script>
                     <script>defaultOption('turno', '{turno}')</script>
                     <script>defaultOption('status', '{status}')</script>
+
+                    <script>getEstados()</script>
+                    <script>defaultOption('uf', '{uf}')</script>
+                    <script>selCidades('{uf}', '{cidade}')</script>
                 </tr>
             </table>
         </section>

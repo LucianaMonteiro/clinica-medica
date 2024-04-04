@@ -28,21 +28,26 @@
                     <td data-th="Tipo sanguíneo">
                         <select id="tp_sanguineo" name="tp_sanguineo" required>
                             <option value="" selected hidden>Selecione o tipo sanguíneo</option>
-                            <option value="a+">A+</option>
-                            <option value="b+">B+</option>
-                            <option value="ab+">AB+</option>
-                            <option value="o+">O+</option>
-                            <option value="a-">A-</option>
-                            <option value="b-">B-</option>
-                            <option value="ab-">AB-</option>
-                            <option value="o-">O-</option>
                         </select>
                     </td>
                     <td data-th="E-mail"><input name="email" value="{email}"></td>
-                    <td data-th="UF"><input name="uf" value="{uf}"></td>
-                    <td data-th="Cidade"><input name="cidade" value="{cidade}"></td>
-                    <td data-th="Endereço"><input name="logradouro" value="{logradouro}"></td>
-                    <td data-th="CEP"><input name="cep" onkeyup="cepMask(this)" value="{cep}"></td>
+                    <td data-th="CEP">
+                        <input name="cep" onkeyup="cepMask(this)" onblur="getAddress(value)" value="{cep}">
+                    </td>
+
+                    <td data-th="Endereço">
+                        <input id="logradouro" name="logradouro" value="{logradouro}">
+                    </td>
+
+                    <td data-th="UF">
+                        <select id="uf" name="uf" onchange="selCidades(value)"></select>
+                    </td>
+
+                    <td data-th="Cidade">
+                        <select id="cidade" name="cidade" onmousedown="this.size=5" onchange="this.size=0"
+                            onblur="this.size=0">
+                        </select>
+                    </td>
                     <td data-th="Situação">
                         <select id="status" name="status">
                             <option value="agendada">Agendada</option>
@@ -51,9 +56,16 @@
                         </select>
                     </td>
 
-                    <script>defaultOption('sexo', '{sexo}')</script>
+                    <script>getEstados()</script>
+                    <script>getTiposSangue()</script>
+
                     <script>defaultOption('tp_sanguineo', '{tp_sanguineo}')</script>
+
+                    <script>defaultOption('sexo', '{sexo}')</script>
                     <script>defaultOption('status', '{status}')</script>
+
+                    <script>defaultOption('uf', '{uf}')</script>
+                    <script>selCidades('{uf}', '{cidade}')</script>
 
                 </tr>
             </table>

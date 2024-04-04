@@ -26,23 +26,30 @@
                     <td><input placeholder="Peso" name="peso" value=""></td>
                     <td><input placeholder="Altura" name="altura" value=""></td>
                     <td>
-                        <select name="tp_sanguineo" required>
-                            <option value="" selected hidden>Selecione o tipo sanguíneo</option>
-                            <option value="a+">A+</option>
-                            <option value="b+">B+</option>
-                            <option value="ab+">AB+</option>
-                            <option value="o+">O+</option>
-                            <option value="a-">A-</option>
-                            <option value="b-">B-</option>
-                            <option value="ab-">AB-</option>
-                            <option value="o-">O-</option>
+                        <select id="tp_sanguineo" name="tp_sanguineo" required>
+                            <option value="">Selecione o tipo sanguíneo</option>
                         </select>
                     </td>
                     <td><input placeholder="E-mail" name="email" value=""></td>
-                    <td><input placeholder="UF" name="uf" value=""></td>
-                    <td><input placeholder="Cidade" name="cidade" value=""></td>
-                    <td><input placeholder="Endereço" name="logradouro" value=""></td>
-                    <td><input placeholder="CEP" onkeyup="cepMask(this)" name="cep" value=""></td>
+                    <td>
+                        <input placeholder="CEP" name="cep" onkeyup="cepMask(this)" onblur="getAddress(value)" value="">
+                    </td>
+                    <td>
+                        <input id="logradouro" name="logradouro" placeholder="Rua, número, apto" value="">
+                    </td>
+
+                    <td>
+                        <select id="uf" name="uf" onchange="selCidades(value)" required>
+                            <option value="">Selecione a UF</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select id="cidade" name="cidade" onmousedown="if(this.options.length>10){this.size=5}"
+                            onchange="this.size=0" onblur="this.size=0" required>
+                            <option value="">Selecione a UF primeiro</option>
+                        </select>
+                    </td>
                     <td>
                         <select name="status" required>
                             <option value="" selected hidden>Selecione a situação</option>
@@ -55,6 +62,9 @@
             </table>
         </section>
 
+        <script>getEstados()</script>
+        <script>getTiposSangue()</script>
+        
         <div class="buttons">
             <a class="button secondary" onclick="closeDialog('dialog')">
                 Cancelar
